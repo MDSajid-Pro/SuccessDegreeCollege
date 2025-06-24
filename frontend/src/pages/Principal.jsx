@@ -1,5 +1,5 @@
 import React from "react";
-import principal from "../assets/Principal.jpg"; // Replace with actual path to your image
+import principal from "../assets/assets"; // Replace with actual path to your image
 
 const ViceChancellor = () => {
   return (
