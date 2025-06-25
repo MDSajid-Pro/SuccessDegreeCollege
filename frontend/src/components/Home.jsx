@@ -6,7 +6,7 @@ import Gallery from './Gallery'
 const Home = () => {
   return (
       <div>
-          <Hero />
+      <Hero />
       <PrincipalMessage />
       <Gallery/>
     </div>

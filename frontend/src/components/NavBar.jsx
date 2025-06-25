@@ -23,13 +23,15 @@ const NavBar = () => {
         { label: "B.A", to: "/ba" },
         { label: "B.Sc", to: "/bsc" },
         { label: "B.Com", to: "/bcom" },
+        { label: "BCA", to: "/bca" },
       ],
      },
     {
       label: "ACADAMICS",
       subLinks: [
-        { label: "Time Table", to: "/time-table" },
-        { label: "Results", to: "/quiz-results" },
+        { label: "Fees Structure", to: "/fee-structure" },
+        { label: "Exam Time Table", to: "/time-table" },
+        { label: "Exam Result", to: "/quiz-results" },
       ],
     },
     { label: "CONTACT", to: "/contact" },
@@ -87,7 +89,7 @@ const NavBar = () => {
 
           {/* Login Button */}
           <HashLink
-            to="/login"
+            to="/admin"
             className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
           >
             <FiUser className="text-lg" />
@@ -163,7 +165,7 @@ const NavBar = () => {
           {/* Mobile Login Button */}
           <li>
             <HashLink
-              to="/login"
+              to="/admin"
               onClick={handleClose}
               className="flex items-center gap-2 border border-blue-600 px-4 py-2 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition w-fit"
             >

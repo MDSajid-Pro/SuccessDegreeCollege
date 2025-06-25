@@ -41,11 +41,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm text-gray-300">
-            <li><a href="/#home" className="hover:text-white">Home</a></li>
-            <li><a href="/#about" className="hover:text-white">About</a></li>
-            <li><a href="/quiz" className="hover:text-white">Quiz</a></li>
-            <li><a href="/#testimonial" className="hover:text-white">Testimonials</a></li>
-            <li><a href="/contact" className="hover:text-white">Contact</a></li>
+            <li><a href="/" className="hover:text-white">Home</a></li>
+            <li><a href="/" className="hover:text-white">About</a></li>
+            <li><a href="/" className="hover:text-white">Contact</a></li>
           </ul>
         </div>
 
@@ -55,11 +53,11 @@ const Footer = () => {
           <ul className="space-y-3 text-sm text-gray-300">
             <li className="flex items-start gap-3">
               <FiMapPin className="mt-1" />
-              <span>Main Road, City, State – 123456</span>
+              <span>Gandhi Chowk, Basavakalyan, Karnataka – 585327</span>
             </li>
             <li className="flex items-center gap-3">
               <FiPhone />
-              <span>+91 98765 43210</span>
+              <span>+91 7019830052</span>
             </li>
             <li className="flex items-center gap-3">
               <FiMail />
@@ -99,8 +97,8 @@ const Footer = () => {
       <div className="border-t border-blue-800 mt-12 pt-4 text-center text-sm text-gray-400 flex flex-col md:flex-row items-center justify-between gap-2">
         <span>&copy; {new Date().getFullYear()} Success Degree College. All rights reserved.</span>
         <div className="space-x-4">
-          <a href="/privacy-policy" className="hover:text-white transition">Privacy Policy</a>
-          <a href="/terms-and-conditions" className="hover:text-white transition">Terms & Conditions</a>
+          <a href="#" className="hover:text-white transition">Privacy Policy</a>
+          <a href="#" className="hover:text-white transition">Terms & Conditions</a>
         </div>
       </div>
     </footer>

@@ -1,18 +1,18 @@
 import React from "react";
-import principal from "../assets/assets"; // Replace with actual path to your image
+import {assets} from "../assets/assets"; // Replace with actual path to your image
 
-const ViceChancellor = () => {
+const Principal = () => {
   return (
     <section id="vice-chancellor" className="bg-white py-12 px-4 md:px-8 lg:px-16">
       {/* Section Title */}
-      <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-2 border-b-4 border-red-500 inline-block">
+      <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-2 border-b-4 border-red-500 inline-block pb-2">
         Principal
       </h2>
 
       {/* Image + Details */}
       <div className="mt-8 flex flex-col items-center text-center">
         <img
-          src={principal}
+          src={assets.principal}
           alt="Principal"
           className="w-full max-w-md rounded-md shadow-lg"
         />
@@ -44,4 +44,4 @@ const ViceChancellor = () => {
   );
 };
 
-export default ViceChancellor;
+export default Principal;

@@ -58,7 +58,7 @@ const Contact = () => {
                 <h4 className="text-lg font-semibold">Address</h4>
                 <p className="text-gray-600">
                   Success Degree College,<br />
-                  Main Road, City, State – 123456
+                  Gandhi Chowk, Basavakalyan, Karnataka – 585327
                 </p>
               </div>
             </div>
@@ -67,7 +67,7 @@ const Contact = () => {
               <FiPhone className="text-blue-600 text-2xl mt-1" />
               <div>
                 <h4 className="text-lg font-semibold">Phone</h4>
-                <p className="text-gray-600">+91 98765 43210</p>
+                <p className="text-gray-600">+91 7019830052</p>
               </div>
             </div>
 
@@ -80,8 +80,9 @@ const Contact = () => {
             </div>
 
             <iframe
-              className="rounded-lg w-full h-52 mt-6"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.0865938106573!2d-122.4064176846823!3d37.7858341797574!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085809caaa2db81%3A0xd85c1b9f5c329af0!2sSuccess%20Degree%20College!5e0!3m2!1sen!2sin!4v1687782932196!5m2!1sen!2sin"
+              className="rounded-lg w-full h-72 mt-6"
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.24705356675!2d76.94467237463759!3d17.873897888608784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf3b7ae685d419%3A0x82689baedcadf431!2sSUCCESS%20UG%20%26%20PG%20COLLEGE%2C%20BASAVAKALYAN!5e0!3m2!1sen!2sin!4v1750866028640!5m2!1sen!2sin"
+              
               allowFullScreen=""
               loading="lazy"
               title="College Map"

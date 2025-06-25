@@ -5,6 +5,8 @@ import Contact from "./pages/Contact"
 import NavBar from "./components/NavBar"
 import Footer from "./components/Footer"
 import AboutUs from "./pages/AboutUs"
+import GalleriesPage from "./pages/GalleriesPage"
+import Login from "./components/admin/login"
 
 
 const App = () => {
@@ -15,7 +17,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/principal" element={<Principal />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/mission" element={<AboutUs/> } />
+        <Route path="/mission" element={<AboutUs />} />
+        <Route path="/galleries" element={<GalleriesPage />} />
+        <Route path="/admin" element={<Login />}>
+          
+        </Route>
       </Routes>
       <Footer/>
     </div>
