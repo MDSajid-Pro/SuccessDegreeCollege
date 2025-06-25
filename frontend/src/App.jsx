@@ -6,7 +6,7 @@ import NavBar from "./components/NavBar"
 import Footer from "./components/Footer"
 import AboutUs from "./pages/AboutUs"
 import GalleriesPage from "./pages/GalleriesPage"
-import Login from "./components/admin/login"
+import Login from "./components/admin/Login"
 
 
 const App = () => {
