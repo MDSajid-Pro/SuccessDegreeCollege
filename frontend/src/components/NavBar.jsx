@@ -20,18 +20,19 @@ const NavBar = () => {
     {
       label: "COURSES",
       subLinks: [
-        { label: "B.A", to: "/ba" },
-        { label: "B.Sc", to: "/bsc" },
-        { label: "B.Com", to: "/bcom" },
-        { label: "BCA", to: "/bca" },
+        { label: "B.A", to: "#" },
+        { label: "B.Sc", to: "#" },
+        { label: "B.Com", to: "#" },
+        { label: "BCA", to: "#" },
       ],
      },
     {
       label: "ACADAMICS",
       subLinks: [
         { label: "Fees Structure", to: "/fee-structure" },
-        { label: "Exam Time Table", to: "/time-table" },
-        { label: "Exam Result", to: "/quiz-results" },
+        { label: "Our Faculty", to: "/faculty" },
+        { label: "Exam Time Table", to: "#" },
+        { label: "Exam Result", to: "#" },
       ],
     },
     { label: "CONTACT", to: "/contact" },
@@ -48,10 +49,10 @@ const NavBar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
         {/* Logo */}
         <div className="flex items-center gap-6">
-          <img src={assets.logo} alt="Logo" className="h-20 w-auto" />
+          <img src={assets.logo2} alt="Logo" className="h-20 w-auto" />
           <div>
-            <h3 className="text-2xl font-bold text-blue-700">ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು</h3>
-            <h4 className="text-lg font-semibold text-blue-600">SUCCESS DEGREE COLLEGE</h4>
+            <h3 className="text-xl font-bold text-blue-700">ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು</h3>
+            <h4 className="text-sm font-semibold text-blue-600">SUCCESS DEGREE COLLEGE</h4>
           </div>
         </div>
 

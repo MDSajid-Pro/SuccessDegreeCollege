@@ -7,6 +7,8 @@ import Footer from "./components/Footer"
 import AboutUs from "./pages/AboutUs"
 import GalleriesPage from "./pages/GalleriesPage"
 import Login from "./components/admin/Login"
+import FeeStructure from "./pages/FeeStructure"
+import Faculty from "./pages/Faculty"
 
 
 const App = () => {
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/mission" element={<AboutUs />} />
         <Route path="/galleries" element={<GalleriesPage />} />
+        <Route path="/fee-structure" element={<FeeStructure />} />
+        <Route path="/faculty" element={ <Faculty/>} />
         <Route path="/admin" element={<Login />}>
           
         </Route>
