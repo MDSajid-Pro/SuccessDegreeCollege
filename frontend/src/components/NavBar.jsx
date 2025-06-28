@@ -2,41 +2,11 @@ import { useState } from "react";
 import { HashLink } from "react-router-hash-link";
 import { HiChevronDown, HiMenu, HiX } from "react-icons/hi";
 import { FiUser } from "react-icons/fi";
-import { assets } from "../assets/assets.js";
+import { assets, menuItems } from "../assets/assets";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
-
-  const menuItems = [
-    { label: "HOME", to: "/" },
-    {
-      label: "ABOUT",
-      subLinks: [
-        { label: "Our Mission", to: "/mission" },
-        { label: "Principal Message", to: "/principal" },
-      ],
-    },
-    {
-      label: "COURSES",
-      subLinks: [
-        { label: "B.A", to: "#" },
-        { label: "B.Sc", to: "#" },
-        { label: "B.Com", to: "#" },
-        { label: "BCA", to: "#" },
-      ],
-     },
-    {
-      label: "ACADAMICS",
-      subLinks: [
-        { label: "Fees Structure", to: "/fee-structure" },
-        { label: "Our Faculty", to: "/faculty" },
-        { label: "Exam Time Table", to: "#" },
-        { label: "Exam Result", to: "#" },
-      ],
-    },
-    { label: "CONTACT", to: "/contact" },
-  ];
 
   const handleToggle = () => setIsOpen(!isOpen);
   const handleClose = () => {

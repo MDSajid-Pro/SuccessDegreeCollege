@@ -1,51 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { GraduationCap, FileDown, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { jsPDF } from "jspdf";
-
-const facultyList = [
-  {
-    name: "Miss Nayer Fatima",
-    title: "Professor",
-    department: "Botany",
-    course:'B.sc',
-    image: "/faculty/ayesha.jpg",
-    bio: "Dr. Ayesha Khan is a renowned expert in Plant Taxonomy with 15+ years of teaching and research experience.",
-  },
-  {
-    name: "Miss Madiha Fatima",
-    title: "Professor",
-    department: "Zoology",
-    course:'B.sc',
-    image: "/faculty/ayesha.jpg",
-    bio: "Dr. Ayesha Khan is a renowned expert in Plant Taxonomy with 15+ years of teaching and research experience.",
-  },
-  {
-    name: "Mr. Rajeev Verma",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course:'B.Com',
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-  {
-    name: "Mr. Rajeev Verma",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course:'B.Com',
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-  {
-    name: "Mr. Rajeev Verma",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course:'B.Com',
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-  // Add more faculty here...
-];
+import { facultyList } from "../assets/assets";
 
 const departments = ["All", ...new Set(facultyList.map(f => f.course))];
 

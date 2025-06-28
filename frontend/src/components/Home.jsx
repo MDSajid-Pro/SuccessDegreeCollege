@@ -2,7 +2,7 @@ import React from 'react'
 import Hero from './Hero'
 import PrincipalMessage from './PrincipalMessage'
 import Gallery from './Gallery'
-import Activities from './Activities'
+import About from './About'
 
 const Home = () => {
   return (
@@ -10,7 +10,7 @@ const Home = () => {
       <Hero />
       <PrincipalMessage />
       <Gallery />
-      <Activities/>
+      <About/>
     </div>
   )
 }
