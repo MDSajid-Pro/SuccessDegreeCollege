@@ -1,112 +1,100 @@
 import React, { useState } from "react";
+import { useAppContext } from "../../context/AppContext";
 import { toast } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import { Mail, Lock, Eye, EyeOff } from "lucide-react";
-import { assets } from "../../assets/assets";
+import { useEffect } from "react";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({ email: "", password: "" });
-  const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const { axios, setToken } = useAppContext();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      toast.error("Please fill in all fields");
-      return;
-    }
+    try {
+      const { data } = await axios.post("/api/admin/login", {
+        email,
+        password,
+      });
 
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      toast.success("Login successful");
-      navigate("/admin/dashboard");
-    }, 1000);
+      if (data.success) {
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        axios.defaults.headers.common["Authorization"] = data.token;
+        toast.success("Login successfully");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      setToken(localStorage.getItem("token"));
+      axios.defaults.headers.common["Authorization"] =
+        localStorage.getItem("token");
+    }
+  }, [setToken, axios]);
+
   return (
-    <div className="min-h-screen flex rounded-full bg-gray-50">
-      {/* Left Side */}
-      <div className="hidden lg:flex w-1/2 bg-gradient-to-tr from-blue-700 to-blue-500 text-white items-center justify-center p-12">
-        <div className="text-center">
-          <h1 className="text-5xl font-bold mb-4">Welcome Back, Admin</h1>
-          <p className="text-lg mb-6">
-            Secure access to your college management dashboard
-          </p>
-          <img
-            src={assets.admin}
-            alt="Login Illustration"
-            className="max-w-sm mx-auto"
-          />
-        </div>
-      </div>
-
-      {/* Right Side (Form) */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center px-6 py-2">
-        <div className="w-full max-w-md bg-white rounded-xl shadow-xl p-8">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-            Admin Login
-          </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Email Field */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Email</label>
-              <div className="relative">
-                <Mail className="absolute top-2.5 left-3 text-gray-400" size={20} />
-                <input
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="admin@college.edu"
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-              </div>
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-full max-w-sm p-6 max-md:m-6 border border-blue-300 shadow-xl shadow-blue-100 rounded-lg">
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-full py-2 text-center">
+            <h1 className="text-3xl font-bold">
+              <span className="text-blue-500">Admin</span>{" "}
+              Login
+            </h1>
+            <p className="font-light">
+              Enter your credentials to access the admin panel
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="mt-6 w-full sm:max-w-md text-gray-600"
+          >
+            <div className="flex flex-col">
+              <label> Email </label>
+              <input
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                type="email"
+                required
+                placeholder="Your email id"
+                className="border-b-2 border-gray-300 p-2 outline-none mb-6"
+              />
             </div>
-
-            {/* Password Field */}
-            <div>
-              <label className="block text-gray-700 font-medium mb-1">Password</label>
-              <div className="relative">
-                <Lock className="absolute top-2.5 left-3 text-gray-400" size={20} />
-                <input
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="••••••••"
-                  className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
-                >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-                </button>
-              </div>
+            <div className="flex flex-col">
+              <label> Password </label>
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                type="password"
+                required
+                placeholder="Your password"
+                className="border-b-2 border-gray-300 p-2 outline-none mb-3"
+              />
             </div>
-
-            {/* Submit Button */}
+            <div className="mt-2 mb-3 cursor-pointer text-blue-600 hover:underline ">
+              Forget password ?
+            </div>
             <button
+              className="w-full py-3 font-medium bg-blue-600 text-white rounded cursor-pointer hover:rounded-3xl hover:bg-blue-700 transition-all"
               type="submit"
-              disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-md font-semibold transition duration-300"
             >
-              {loading ? "Logging in..." : "Login"}
+              Log in
             </button>
-          </form>
 
-          <p className="mt-6 text-sm text-center text-gray-500">
-            Access restricted to authorized college admins.
-          </p>
+            <div className="mt-4 text-center text-gray-500">
+              Don't have an account?
+              <span
+                className="text-blue-500 cursor-pointer font-medium hover:underline"
+              >
+                Sign up
+              </span>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { HashLink } from "react-router-hash-link";
 import { HiChevronDown, HiMenu, HiX } from "react-icons/hi";
 import { FiUser } from "react-icons/fi";
 import { assets, menuItems } from "../assets/assets";
+import { useAppContext } from "../context/AppContext";
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,12 +15,21 @@ const NavBar = () => {
     setOpenDropdown(null);
   };
 
+  const { token } = useAppContext()
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    axios.defaults.headers.common["Authorization"] = null;
+    setToken(null);
+  };
+  
+
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4">
         {/* Logo */}
         <div className="flex items-center gap-6">
-          <img src={assets.logo2} alt="Logo" className="h-20 w-auto" />
+          <img src={assets.logo2} alt="Logo" className="h-16 w-auto" />
           <div>
             <h3 className="text-xl font-bold text-blue-700">ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು</h3>
             <h4 className="text-sm font-semibold text-blue-600">SUCCESS DEGREE COLLEGE</h4>
@@ -59,13 +69,25 @@ const NavBar = () => {
           </ul>
 
           {/* Login Button */}
-          <HashLink
-            to="/admin"
+          {token ?
+            <HashLink
+              to={'/'}
+            onClick={logout}
+            className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+          >
+            <FiUser className="text-lg" />
+            Logout
+            </HashLink>
+            : 
+            <HashLink
+            to={'/admin'}
             className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
           >
             <FiUser className="text-lg" />
             Login
           </HashLink>
+          
+          }
         </div>
 
         {/* Mobile Menu Button */}

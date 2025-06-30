@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Hero from './Hero'
 import PrincipalMessage from './PrincipalMessage'
 import Gallery from './Gallery'
@@ -10,7 +10,7 @@ const Home = () => {
       <Hero />
       <PrincipalMessage />
       <Gallery />
-      <About/>
+      <About />
     </div>
   )
 }
