@@ -5,7 +5,7 @@ const router = express.Router()
 
 
 // POST /api/newsletter
-router.post("/", subscribeToNewsletter);
+router.post("/add", subscribeToNewsletter);
 router.get("/all", getAllSubscribers);
 router.post('/delete', adminAuth, deleteSubscribersById)
 

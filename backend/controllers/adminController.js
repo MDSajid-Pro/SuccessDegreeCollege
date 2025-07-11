@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken'
+import Newsletter from '../models/newsletterModel.js';
 
 export const adminLogin = async (req, res) => {
   try {
@@ -26,5 +27,26 @@ export const adminLogin = async (req, res) => {
       success: false,
       message: error.message
     })
+  }
+}
+
+export const getAllComments = async (req, res) => {
+  try {
+    const comments = await Newsletter.find({}).sort({ createdAt: -1 })
+    res.json({success: true, comments})
+  } catch (error) {
+    res.json({success: false, message: error.message})
+  }
+}
+
+export const approveSubscriberById = async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    await Newsletter.findByIdAndUpdate(id, { isApproved: true });
+    res.json({success: true, message:'Approved successfully'})
+
+  } catch (error) {
+    res.json({success: false, message: error.message})
   }
 }

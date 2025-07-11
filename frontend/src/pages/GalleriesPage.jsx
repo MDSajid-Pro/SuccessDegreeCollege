@@ -1,9 +1,29 @@
-import React, { useState } from "react";
-import { galleryImages } from "../assets/assets";
+import React, { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useAppContext } from "../context/AppContext";
 
 const GalleriesPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
+  const [galleryImages, setGalleryImages] = useState([]);
+  const { axios } = useAppContext(); // use your axios instance from context
+  const inputRef = useRef();
+
+  const fetchImages = async () => {
+    try {
+      const { data } = await axios.get("/api/image/all");
+      if (data.success) {
+        setGalleryImages(data.images);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error fetching images:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const handleImageClick = (src) => {
     setSelectedImage(src);
@@ -20,22 +40,21 @@ const GalleriesPage = () => {
       </h1>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {galleryImages.map((src, index) => (
+        {galleryImages.map((img, index) => (
           <div
             key={index}
             className="overflow-hidden rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out bg-gray-100 cursor-pointer"
-            onClick={() => handleImageClick(src)}
+            onClick={() => handleImageClick(img.image)} // assuming your field is `image`
           >
             <img
-              src={src}
-              alt={`Gallery image ${index + 1}`}
+              src={img.image}
+              alt={img.name || `Gallery image ${index + 1}`}
               className="w-full h-60 object-cover"
             />
           </div>
         ))}
       </div>
 
-      {/* Zoom Modal */}
       {selectedImage && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center">
           <div className="relative max-w-5xl w-full mx-4">

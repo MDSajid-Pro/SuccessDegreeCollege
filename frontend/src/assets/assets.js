@@ -5,14 +5,13 @@ import hero_image from "./hero_image.jpg";
 import about_image from "./about_image.jpg";
 import bg_video from "./bg_video.mp4";
 import principal from "./Principal.jpg";
-import admin from "./4574122.jpg";
-import clab from "./Chemistry_lab.jpeg";
-import office from "./Office.jpeg";
-import photo from "./Photo.jpeg";
 import home_icon from "./home_icon.svg";
 import add_icon from "./add_icon.svg";
 import list_icon from "./list_icon.svg";
 import comment_icon from "./comment_icon.svg";
+import tick_icon from "./tick_icon.svg"
+import bin_icon from "./bin_icon.svg"
+import upload_area from './upload_area.svg'
 
 export const assets = {
   cross_icon,
@@ -22,26 +21,14 @@ export const assets = {
   about_image,
   principal,
   bg_video,
-  admin,
   home_icon,
   add_icon,
   list_icon,
   comment_icon,
+  tick_icon,
+  bin_icon,
+  upload_area
 };
-
-// src/assets/assets.js
-
-export const galleryImages = [
-  photo,
-  office,
-  clab,
-  principal,
-  hero_image,
-  about_image,
-  principal,
-  hero_image,
-  about_image,
-];
 
 // assets.js or ../assets/assets.js
 
@@ -63,7 +50,7 @@ export const facultyList = [
     bio: "Dr. Ayesha Khan is a renowned expert in Plant Taxonomy with 15+ years of teaching and research experience.",
   },
   {
-    name: "Mr. Asif Kahn",
+    name: "Mr. Asif Khan",
     title: "Assistant Professor",
     department: "Commerce",
     course: "B.Com",

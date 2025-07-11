@@ -8,8 +8,12 @@ export const uploadImage = async (req, res) => {
       
       const imageFile = req.file
 
-    if (!name || !isPublished) {
-      return res.json({ message: "file and fileName are required" });
+    if (!name ) {
+       return res.json({ success: false, message: "Name is required" });
+      }
+
+      if ( !isPublished) {
+       res.json({ success: false, message: "isPublished is required" });
       }
       
       const filebuffer = fs.readFileSync(imageFile.path)

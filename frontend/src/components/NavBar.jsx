@@ -15,14 +15,13 @@ const NavBar = () => {
     setOpenDropdown(null);
   };
 
-  const { token } = useAppContext()
+  const { token } = useAppContext();
 
   const logout = () => {
     localStorage.removeItem("token");
     axios.defaults.headers.common["Authorization"] = null;
     setToken(null);
   };
-  
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50 p-4">
@@ -31,8 +30,12 @@ const NavBar = () => {
         <div className="flex items-center gap-6">
           <img src={assets.logo2} alt="Logo" className="h-16 w-auto" />
           <div>
-            <h3 className="text-xl font-bold text-blue-700">ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು</h3>
-            <h4 className="text-sm font-semibold text-blue-600">SUCCESS DEGREE COLLEGE</h4>
+            <h3 className="text-xl font-bold text-blue-700">
+              ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು
+            </h3>
+            <h4 className="text-sm font-semibold text-blue-600">
+              SUCCESS DEGREE COLLEGE
+            </h4>
           </div>
         </div>
 
@@ -69,25 +72,24 @@ const NavBar = () => {
           </ul>
 
           {/* Login Button */}
-          {token ?
+          {token ? (
             <HashLink
-              to={'/'}
-            onClick={logout}
-            className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-          >
-            <FiUser className="text-lg" />
-            Logout
+              to={"/"}
+              onClick={logout}
+              className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+            >
+              <FiUser className="text-lg" />
+              Logout
             </HashLink>
-            : 
+          ) : (
             <HashLink
-            to={'/admin'}
-            className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-          >
-            <FiUser className="text-lg" />
-            Login
-          </HashLink>
-          
-          }
+              to={"/admin"}
+              className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+            >
+              <FiUser className="text-lg" />
+              Login
+            </HashLink>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -95,7 +97,11 @@ const NavBar = () => {
           onClick={handleToggle}
           className="lg:hidden text-gray-800 focus:outline-none"
         >
-          {isOpen ? <HiX className="text-3xl" /> : <HiMenu className="text-3xl" />}
+          {isOpen ? (
+            <HiX className="text-3xl" />
+          ) : (
+            <HiMenu className="text-3xl" />
+          )}
         </button>
       </div>
 
@@ -156,16 +162,27 @@ const NavBar = () => {
           ))}
 
           {/* Mobile Login Button */}
-          <li>
-            <HashLink
-              to="/admin"
-              onClick={handleClose}
-              className="flex items-center gap-2 border border-blue-600 px-4 py-2 rounded-full text-blue-600 hover:bg-blue-600 hover:text-white transition w-fit"
-            >
-              <FiUser />
-              Login
-            </HashLink>
-          </li>
+          
+            {token ? (
+              <HashLink
+                to={"/"}
+                onClick={logout}
+                className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+              >
+                <FiUser className="text-lg" />
+                Logout
+              </HashLink>
+            ) : (
+              <HashLink
+                to={"/admin"}
+                onClick={handleClose}
+                className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+              >
+                <FiUser className="text-lg" />
+                Login
+              </HashLink>
+            )}
+      
         </ul>
       </div>
     </nav>

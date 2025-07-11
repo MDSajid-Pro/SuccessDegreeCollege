@@ -13,7 +13,9 @@ import AdmissionForm from "./pages/AdmissionForm"
 import { Toaster } from "react-hot-toast"
 import {useAppContext} from './context/AppContext'
 import Dashboard from "./pages/admin/Dashboard"
-import NewsletterAdmin from "./pages/admin/NewsletterAdmin"
+import Subscribers from "./pages/admin/Subscribers"
+import AddImages from "./pages/admin/AddImages"
+import ListImages from "./pages/admin/ListImages"
 
 const App = () => {
 
@@ -33,10 +35,12 @@ const App = () => {
         <Route path="/admission" element={<AdmissionForm/>} />
         <Route path="/admin" element={token ? <Layout/> :<Login />}>
           <Route index element={<Dashboard />} />
-          <Route path="newsletter" element={ <NewsletterAdmin/> } />
+          <Route path="subscribers" element={<Subscribers />} />
+          <Route path="addImages" element={<AddImages />} />
+          <Route path="imageList" element={ <ListImages/> } />
         </Route>
       </Routes>
-      {token ? null : <Footer/>}
+      <Footer/>
     </>
   )
 }

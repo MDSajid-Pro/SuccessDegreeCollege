@@ -19,7 +19,7 @@ app.use(cors())
 
 app.get('/', (req, res) => res.send('API is working '))
 app.use('/api/admin', adminRouter)
-app.use("/api/newsletter", router);
+app.use("/api/subscribers", router);
 app.use('/api/image', imageRouter)
 
 app.listen(port, () => {

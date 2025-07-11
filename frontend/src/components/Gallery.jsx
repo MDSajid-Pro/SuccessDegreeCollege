@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { galleryImages } from "../assets/assets"; // Adjust path as needed
-import { X } from "lucide-react"; // X icon
-import { ArrowRight } from "lucide-react";
+import { X, ArrowRight } from "lucide-react";
+import { useAppContext } from "../context/AppContext"; // Assuming you have axios in context
 
 const Gallery = () => {
   const navigate = useNavigate();
+  const { axios } = useAppContext();
+
+  const [galleryImages, setGalleryImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
+
+  const fetchGalleryImages = async () => {
+    try {
+      const { data } = await axios.get("/api/image/all"); // Adjust backend route if needed
+      if (data.success) {
+        setGalleryImages(data.images);
+      } else {
+        console.error("Failed to fetch images:", data.message);
+      }
+    } catch (err) {
+      console.error("Error fetching images:", err.message);
+    }
+  };
+
+  useEffect(() => {
+    fetchGalleryImages();
+  }, []);
 
   const handleImageClick = (src) => {
     setSelectedImage(src);
@@ -23,15 +42,15 @@ const Gallery = () => {
       </h2>
 
       <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {galleryImages.slice(0, 6).map((src, index) => (
+        {galleryImages.slice(0, 6).map((img, index) => (
           <div
             key={index}
             className="overflow-hidden rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition duration-300 ease-in-out bg-white cursor-pointer"
-            onClick={() => handleImageClick(src)}
+            onClick={() => handleImageClick(img.image)}
           >
             <img
-              src={src}
-              alt={`Gallery image ${index + 1}`}
+              src={img.image}
+              alt={img.name || `Gallery image ${index + 1}`}
               className="w-full h-60 object-cover"
             />
           </div>
@@ -44,7 +63,7 @@ const Gallery = () => {
           onClick={() => navigate("/galleries")}
           className="inline-flex items-center gap-2 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition"
         >
-          View More <ArrowRight size={18}/>
+          View More <ArrowRight size={18} />
         </button>
       </div>
 

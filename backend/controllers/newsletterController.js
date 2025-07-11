@@ -5,20 +5,26 @@ export const subscribeToNewsletter = async (req, res) => {
   const { name, email } = req.body;
 
   if (!name || !email) {
-    return res.status(400).json({ message: "Name and Email are required." });
+    return res.json({ success: false, message: "Name and Email are required." });
   }
 
   try {
     // Check if email already exists
     const existing = await Newsletter.findOne({ email });
     if (existing) {
-      return res.status(409).json({ message: "Email is already subscribed." });
+      return res.json({success: false, message: "Email is already subscribed." });
+    }
+
+    // Check if name already exists
+    const existingName = await Newsletter.findOne({ name });
+    if (existingName) {
+      return res.json({success: false, message: "Name already exist." });
     }
 
     const newSubscriber = new Newsletter({ name, email });
     await newSubscriber.save();
 
-    res.status(201).json({ message: "Subscribed successfully!" });
+    res.json({ success: true, message: "Subscribed successfully!" });
 
     const mailOptions = {
     from: process.env.SENDER_EMAIL,
@@ -33,14 +39,14 @@ export const subscribeToNewsletter = async (req, res) => {
 
   } catch (err) {
     console.error("Newsletter error:", err);
-    res.status(500).json({ message: "Server error. Please try again later." });
+    res.json({ success: false, message: "Server error. Please try again later." });
   }
 };
 
 export const getAllSubscribers = async (req, res) => {
   try {
     const subscribers = await Newsletter.find().sort({ subscribedAt: -1 });
-    res.status(200).json(subscribers);
+    res.status(200).json({success: true,subscribers});
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch subscribers." });
   }

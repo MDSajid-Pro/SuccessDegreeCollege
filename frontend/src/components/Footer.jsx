@@ -1,4 +1,5 @@
-import React from "react";
+import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import { useState } from "react";
 import {
   FiPhone,
@@ -11,29 +12,27 @@ import {
 } from "react-icons/fi";
 
 const Footer = () => {
-
-   const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
 
     try {
-      const res = await fetch("http://localhost:4000/api/newsletter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email }),
+      const { data } = await axios.post("/api/subscribers/add", {
+        name,
+        email,
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message);
-      setMessage("Subscribed successfully!");
-      setName("");
-      setEmail("");
+      if (data.success) {
+        toast.success(data.message);
+        setName("");
+        setEmail("");
+      } else {
+        toast.error(data.message);
+      }
     } catch (err) {
-      setMessage(err.message || "Subscription failed.");
+      toast.error(err.message )
     }
   };
 
@@ -117,14 +116,14 @@ const Footer = () => {
               type="text"
               value={name}
               placeholder="Your Name"
-               onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2 text-sm text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <input
               type="email"
               value={email}
               placeholder="Your Email"
-               onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 text-sm text-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <button
@@ -133,7 +132,6 @@ const Footer = () => {
             >
               Subscribe
             </button>
-            {message && <p className="text-sm mt-2 text-center text-yellow-300">{message}</p>}
           </form>
         </div>
       </div>

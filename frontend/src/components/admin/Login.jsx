@@ -20,7 +20,7 @@ const Login = () => {
         setToken(data.token);
         localStorage.setItem("token", data.token);
         axios.defaults.headers.common["Authorization"] = data.token;
-        toast.success("Login successfully");
+        toast.success("Welcome to Admin dashboard");
       } else {
         toast.error(data.message);
       }
