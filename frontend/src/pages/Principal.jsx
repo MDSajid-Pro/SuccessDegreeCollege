@@ -1,9 +1,12 @@
 import React from "react";
-import {assets} from "../assets/assets"; // Replace with actual path to your image
+import { assets } from "../assets/assets"; 
 
 const Principal = () => {
   return (
-    <section id="vice-chancellor" className="bg-white py-12 px-4 md:px-8 lg:px-16">
+    <section
+      id="vice-chancellor"
+      className="bg-white py-12 px-4 md:px-8 lg:px-16"
+    >
       {/* Section Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-2 border-b-4 border-red-500 inline-block pb-2">
         Principal
@@ -14,7 +17,7 @@ const Principal = () => {
         <img
           src={assets.principal}
           alt="Principal"
-          className="w-full max-w-md rounded-md shadow-lg"
+          className="w-full max-w-md h-full rounded-md shadow-lg"
         />
 
         <div className="mt-6">
@@ -36,9 +39,30 @@ const Principal = () => {
 
       {/* Description */}
       <p className="mt-8 text-justify max-w-5xl mx-auto text-gray-700 leading-relaxed text-base sm:text-lg">
-        The University logo is Stone Cart and Videye Amruta is the moto, which means education is nectar and truly conveys the spirit of university education. Creating a complete man through Higher Education with an eco-friendly environment in an University is utmost important. All deep rooted core disciplinary components (Shasthras) of education are highly integrated and will never clash each other, in fact, complement each other for the welfare of the human kind. Integration of core disciplinary knowledge with vital skills, values and professional ethics is a paradigm shift visualized under new National Education Policy-2020 in Higher Education aiming at the youth leading towards a rewarding life. Learning-outcomes with human values and moral ethics enhance the quality of higher education.
-        <br /><br />
-        The nature centric higher education with holistic and judicious blend of Knowledge and Technology would lead the welfare of the humanity. Significant glimpses the past glory is very vital for the sustainable development of the future generation. Commitment, Credibility and Character of every individual directs the path of the future development. Internationalization enables higher education for a better visibility, leveraging strategic partnerships, establishing standard global benchmarks, mobilizing intellectual resources and ultimately working together for the welfare the mankind. The Gulbarga University is to establish collaborations for the global level in the field of higher education with a sense of concern and commitment for the welfare of the state, country and the world at large.
+        At Success Degree College, we believe that true education goes beyond
+        textbooks—it shapes character, instills discipline, and nurtures values.
+        Our college emblem reflects progress and purpose, with the motto
+        "Education is the key to success," guiding every stride we take toward
+        academic excellence and social responsibility.
+        <br />
+        <br />
+        In today's rapidly evolving world, it's crucial to equip students not
+        only with knowledge, but with life skills, values, and a deep-rooted
+        sense of ethics. Inspired by the vision of the National Education Policy
+        2020, our curriculum is thoughtfully designed to blend core disciplinary
+        learning with hands-on experience and moral grounding. We aim to mold
+        our students into responsible citizens who can lead with integrity and
+        compassion.
+        <br />
+        <br />
+        At Success Degree College, we foster a holistic, student-centric
+        environment where learning thrives amid nature and innovation. We are
+        committed to developing young minds into future leaders—academically
+        competent, ethically strong, and globally aware. Our journey is driven
+        by the pillars of Commitment, Character, and Credibility. Through
+        meaningful collaborations and a deep concern for the societal good, we
+        are paving the way for inclusive, sustainable, and empowered futures—for
+        our students, our region, and our nation.
       </p>
     </section>
   );

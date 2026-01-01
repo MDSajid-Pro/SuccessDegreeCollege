@@ -1,97 +1,231 @@
-import React from "react";
-import { FiMail, FiPhone, FiMapPin, FiUser, FiMessageSquare } from "react-icons/fi";
+import React, { useState } from 'react';
+import { 
+  MapPin, 
+  Phone, 
+  Mail, 
+  Clock, 
+  Send, 
+  MessageSquare,
+  Globe
+} from 'lucide-react';
 
-const Contact = () => {
+const ContactPage = () => {
+  const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormStatus('submitting');
+    // Simulate API call
+    setTimeout(() => setFormStatus('success'), 1500);
+  };
+
+  const contactDepartments = [
+    { name: "Admissions Office", email: "admissions@univ.edu", phone: "+1 (555) 123-4567" },
+    { name: "Student Affairs", email: "student.help@univ.edu", phone: "+1 (555) 123-4568" },
+    { name: "Registrar", email: "registrar@univ.edu", phone: "+1 (555) 123-4569" },
+  ];
+
   return (
-    <section className="bg-gray-50 py-16 px-6 lg:px-32">
-      <div className="max-w-7xl mx-auto">
-        <h2 className="text-3xl lg:text-4xl font-bold text-center text-blue-700 mb-12">
-          Contact Us
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <form className="bg-white shadow-md rounded-lg p-8 space-y-6">
-            <div className="relative">
-              <FiUser className="absolute left-3 top-3 text-gray-400 text-lg" />
-              <input
-                type="text"
-                placeholder="Your Name"
-                className="w-full border border-gray-300 rounded-md py-3 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-              />
-            </div>
-
-            <div className="relative">
-              <FiMail className="absolute left-3 top-3 text-gray-400 text-lg" />
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full border border-gray-300 rounded-md py-3 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                required
-              />
-            </div>
-
-            <div className="relative">
-              <FiMessageSquare className="absolute left-3 top-3 text-gray-400 text-lg" />
-              <textarea
-                placeholder="Your Message"
-                rows="5"
-                className="w-full border border-gray-300 rounded-md py-3 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-                required
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white py-3 rounded-md font-semibold hover:bg-blue-700 transition"
-            >
-              Send Message
-            </button>
-          </form>
-
-          {/* Contact Info */}
-          <div className="flex flex-col justify-center bg-white shadow-md rounded-lg p-8 space-y-6">
-            <div className="flex items-start gap-4">
-              <FiMapPin className="text-blue-600 text-2xl mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold">Address</h4>
-                <p className="text-gray-600">
-                  Success Degree College,<br />
-                  Gandhi Chowk, Basavakalyan, Karnataka – 585327
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <FiPhone className="text-blue-600 text-2xl mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold">Phone</h4>
-                <p className="text-gray-600">+91 7019830052</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <FiMail className="text-blue-600 text-2xl mt-1" />
-              <div>
-                <h4 className="text-lg font-semibold">Email</h4>
-                <p className="text-gray-600">contact@successcollege.edu.in</p>
-              </div>
-            </div>
-
-            <iframe
-              className="rounded-lg w-full h-72 mt-6"
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.24705356675!2d76.94467237463759!3d17.873897888608784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf3b7ae685d419%3A0x82689baedcadf431!2sSUCCESS%20UG%20%26%20PG%20COLLEGE%2C%20BASAVAKALYAN!5e0!3m2!1sen!2sin!4v1750866028640!5m2!1sen!2sin"
-              
-              allowFullScreen=""
-              loading="lazy"
-              title="College Map"
-            ></iframe>
-          </div>
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+      
+      {/* --- Header Section --- */}
+      <div className="bg-yellow-400 text-white py-20 px-4 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2" />
+        <div className="relative max-w-7xl mx-auto text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
+          <p className="text-black text-lg max-w-2xl mx-auto">
+            Have questions about admissions, campus life, or academics? 
+            Our team is here to help you navigate your journey.
+          </p>
         </div>
       </div>
-    </section>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* --- Left Column: Contact Info & Map --- */}
+          <div className="lg:col-span-1 space-y-6">
+            
+            {/* Quick Info Cards */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+              <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+                <Globe className="w-5 h-5 text-blue-600" /> Campus Info
+              </h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900">Main Campus</h4>
+                    <p className="text-slate-500 text-sm mt-1">
+                      123 Innovation Blvd,<br />
+                      Academic District, NY 10012
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                    <Phone className="w-5 h-5 text-green-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900">General Line</h4>
+                    <p className="text-slate-500 text-sm mt-1">+1 (555) 000-9999</p>
+                    <p className="text-xs text-slate-400 mt-1">Mon-Fri, 9am - 5pm</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center shrink-0">
+                    <Mail className="w-5 h-5 text-purple-600" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900">Email Us</h4>
+                    <p className="text-slate-500 text-sm mt-1">info@univ.edu</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Department Directory */}
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100">
+              <h3 className="text-lg font-bold mb-4">Direct Lines</h3>
+              <div className="space-y-4">
+                {contactDepartments.map((dept, idx) => (
+                  <div key={idx} className="pb-4 border-b border-slate-100 last:border-0 last:pb-0">
+                    <p className="font-medium text-slate-900">{dept.name}</p>
+                    <div className="flex flex-col gap-1 mt-1 text-sm text-slate-500">
+                      <span className="hover:text-blue-600 cursor-pointer transition-colors">{dept.email}</span>
+                      <span>{dept.phone}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
+
+          {/* --- Right Column: Inquiry Form --- */}
+          <div className="lg:col-span-2">
+            <div className="bg-white rounded-2xl shadow-xl border border-slate-100 overflow-hidden">
+              <div className="p-8 md:p-10">
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg shadow-blue-600/20">
+                    <MessageSquare className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-slate-900">Send us a Message</h2>
+                    <p className="text-slate-500 text-sm">We typically reply within 24 hours.</p>
+                  </div>
+                </div>
+
+                {formStatus === 'success' ? (
+                  <div className="bg-green-50 border border-green-100 rounded-xl p-8 text-center py-20">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Send className="w-8 h-8 text-green-600" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-green-800 mb-2">Message Sent!</h3>
+                    <p className="text-green-700">Thank you for contacting us. We will get back to you shortly.</p>
+                    <button 
+                      onClick={() => setFormStatus('idle')}
+                      className="mt-6 text-green-700 font-semibold hover:underline"
+                    >
+                      Send another message
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-slate-700">First Name</label>
+                        <input 
+                          type="text" 
+                          required
+                          className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                          placeholder="John"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-slate-700">Last Name</label>
+                        <input 
+                          type="text" 
+                          required
+                          className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                          placeholder="Doe"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-slate-700">Email Address</label>
+                        <input 
+                          type="email" 
+                          required
+                          className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
+                          placeholder="john@example.com"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-semibold text-slate-700">Subject</label>
+                        <select className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-slate-600">
+                          <option>General Inquiry</option>
+                          <option>Admissions</option>
+                          <option>Technical Support</option>
+                          <option>Campus Visit</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-semibold text-slate-700">Message</label>
+                      <textarea 
+                        rows="5"
+                        required
+                        className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none"
+                        placeholder="How can we help you today?"
+                      ></textarea>
+                    </div>
+
+                    <button 
+                      type="submit"
+                      disabled={formStatus === 'submitting'}
+                      className="w-full bg-slate-900 hover:bg-blue-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg hover:shadow-blue-500/25 flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      {formStatus === 'submitting' ? (
+                        <>Processing...</>
+                      ) : (
+                        <>Send Message <Send className="w-5 h-5" /></>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+              
+              {/* Optional Map Embed Area */}
+              <div className="h-64 bg-slate-200 w-full relative">
+                {/* Replace the src below with your actual Google Maps Embed Link */}
+                <iframe
+              className="rounded-lg w-full h-72 mt-16"
+               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.24705356675!2d76.94467237463759!3d17.873897888608784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf3b7ae685d419%3A0x82689baedcadf431!2sSUCCESS%20UG%20%26%20PG%20COLLEGE%2C%20BASAVAKALYAN!5e0!3m2!1sen!2sin!4v1750866028640!5m2!1sen!2sin"
+              
+              width="100%" 
+                  height="100%" 
+                  style={{border:0}} 
+                  allowFullScreen="" 
+                  loading="lazy"
+                  title="Campus Map"
+            ></iframe>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
   );
 };
 
-export default Contact;
+export default ContactPage;

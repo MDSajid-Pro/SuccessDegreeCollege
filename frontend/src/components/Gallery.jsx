@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { X, ArrowRight } from "lucide-react";
-import { useAppContext } from "../context/AppContext"; // Assuming you have axios in context
+import { useAppContext } from "../context/AppContext"; 
 
 const Gallery = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const Gallery = () => {
 
   const fetchGalleryImages = async () => {
     try {
-      const { data } = await axios.get("/api/image/all"); // Adjust backend route if needed
+      const { data } = await axios.get("/api/image/all"); 
       if (data.success) {
         setGalleryImages(data.images);
       } else {

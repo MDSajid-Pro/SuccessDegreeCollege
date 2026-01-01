@@ -25,15 +25,10 @@ const PrincipalMessage = () => {
           {/* Right: Message */}
           <div className="text-gray-800 text-justify leading-relaxed">
             <p className="mb-4">
-              The University logo is Stone Cart and Vidyeye Amruta is the moto, which means
-              education is nectar and truly conveys the spirit of university education.
-              Creating a complete man through Higher Education with an eco-friendly
-              environment in a University is utmost important.
+              At Success Degree College, we believe that true education goes beyond textbooks—it shapes character, instills discipline, and nurtures values. Our college emblem reflects progress and purpose, with the motto "Education is the key to success," guiding every stride we take toward academic excellence and social responsibility.
             </p>
             <p className="mb-4">
-              All deep rooted core disciplinary components (Shasthras) of education are highly
-              integrated and will never clash each other, in fact, complement each other for
-              the welfare of humankind...
+              In today's rapidly evolving world, it's crucial to equip students not only with knowledge, but with life skills, values, and a deep-rooted sense of ethics. Inspired by the vision of the National Education Policy 2020, our curriculum ...
             </p>
 
             {/* Read More Button */}

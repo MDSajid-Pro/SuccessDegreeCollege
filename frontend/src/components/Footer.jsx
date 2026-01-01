@@ -43,7 +43,7 @@ const Footer = () => {
         <div>
           <h2 className="text-xl font-bold mb-4">SUCCESS DEGREE COLLEGE</h2>
           <p className="text-gray-300 text-sm">
-            ಯಶಸ್ಸು ಪದವಿ ಕಾಲೇಜು
+            ಸಕ್ಸೆಸ್  ಡಿಗ್ರಿ  ಕಾಲೇಜು
             <br />
             Excellence in Education and Student Success.
           </p>
@@ -74,13 +74,18 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/" className="hover:text-white">
-                About
+              <a href="https://gug.ac.in" target="_blank" className="hover:text-white">
+                Gulbarga University
               </a>
             </li>
             <li>
-              <a href="/" className="hover:text-white">
-                Contact
+              <a href="https://bidaruniversity.karnataka.gov.in/en" target="_blank" className="hover:text-white">
+                Bidar University
+              </a>
+            </li>
+            <li>
+              <a href="https://question-papers-seven.vercel.app" target="_blank" className="hover:text-white">
+                Question Bank
               </a>
             </li>
           </ul>

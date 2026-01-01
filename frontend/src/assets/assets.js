@@ -3,7 +3,6 @@ import menu_icon from "./menu_icon.svg";
 import logo2 from "./logo.png";
 import hero_image from "./hero_image.jpg";
 import about_image from "./about_image.jpg";
-import bg_video from "./bg_video.mp4";
 import principal from "./Principal.jpg";
 import home_icon from "./home_icon.svg";
 import add_icon from "./add_icon.svg";
@@ -20,7 +19,6 @@ export const assets = {
   hero_image,
   about_image,
   principal,
-  bg_video,
   home_icon,
   add_icon,
   list_icon,
@@ -30,53 +28,11 @@ export const assets = {
   upload_area
 };
 
-// assets.js or ../assets/assets.js
-
-export const facultyList = [
-  {
-    name: "Miss Nayer Fatima",
-    title: "Professor",
-    department: "Botany",
-    course: "B.sc",
-    image: "/faculty/ayesha.jpg",
-    bio: "Nayer Fatima is holding a degree MSc in BOTANY",
-  },
-  {
-    name: "Miss Madiha Fatima",
-    title: "Professor",
-    department: "Zoology",
-    course: "B.sc",
-    image: "/faculty/ayesha.jpg",
-    bio: "Dr. Ayesha Khan is a renowned expert in Plant Taxonomy with 15+ years of teaching and research experience.",
-  },
-  {
-    name: "Mr. Asif Khan",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course: "B.Com",
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-  {
-    name: "Mr. Moin",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course: "B.Com",
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-  {
-    name: "Mr. Shoeb Ahmed",
-    title: "Assistant Professor",
-    department: "Commerce",
-    course: "B.Com",
-    image: "/faculty/rajeev.jpg",
-    bio: "Specializes in Financial Accounting and Business Law with hands-on experience in corporate consulting.",
-  },
-];
 
 export const menuItems = [
-  { label: "HOME", to: "/" },
+  {
+    label: "HOME", to: "/"
+  },
   {
     label: "ABOUT",
     subLinks: [
@@ -85,25 +41,26 @@ export const menuItems = [
     ],
   },
   {
-    label: "COURSES",
-    subLinks: [
-      { label: "B.A", to: "#" },
-      { label: "B.Sc", to: "#" },
-      { label: "B.Com", to: "#" },
-      { label: "BCA", to: "#" },
-    ],
-  },
-  {
     label: "ACADAMICS",
     subLinks: [
       { label: "Our Faculty", to: "/faculty" },
-      { label: "Exam Time Table", to: "#" },
-      { label: "Exam Result", to: "#" },
+      { label: 'Academic Results', to: '/result'}
     ],
   },
   {
-    label: "ONLINE ADMISSION",
-    to: "/admission",
+    label: "ADMISSION",
+    subLinks: [
+      { label: 'Online Admission', to: '/admission' },
+      { label: 'Admission Details', to: '/admissionDetails' }
+    ],
+  },
+  {
+    label: "PASSOUT STUDENTS LIST",
+    subLinks: [
+      { label: 'Student List 2023-2024', to: '#'},
+      { label: 'Student List 2024-2025', to: '#' },
+      { label: 'Student List 2025-2026', to: '#'}
+    ]
   },
   { label: "CONTACT", to: "/contact" },
 ];

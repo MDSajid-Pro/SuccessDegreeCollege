@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { Route, Routes } from "react-router-dom"
 import Home from "./components/Home"
 import Principal from './pages/Principal'
@@ -17,9 +18,20 @@ import Subscribers from "./pages/admin/Subscribers"
 import AddImages from "./pages/admin/AddImages"
 import ListImages from "./pages/admin/ListImages"
 
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+import NotFound from "./pages/NotFound"
+import AdmissionDetails from "./pages/AdmissionDetails"
+import CourseDetail from "./pages/CourseDetail"
+import ResultsPage from "./pages/ResultsPage"
+
 const App = () => {
 
   const { token } = useAppContext();
+
+  useEffect(() => {
+  AOS.init({ duration: 1000, once: true });
+}, []);
 
   return (
     <>
@@ -27,12 +39,16 @@ const App = () => {
       <NavBar/>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="*" element={ <NotFound/>} />
         <Route path="/principal" element={<Principal />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/mission" element={<AboutUs />} />
         <Route path="/galleries" element={<GalleriesPage />} />
         <Route path="/faculty" element={<Faculty />} />
-        <Route path="/admission" element={<AdmissionForm/>} />
+        <Route path="/admission" element={<AdmissionForm />} />
+        <Route path="/admissionDetails" element={<AdmissionDetails />} />
+        <Route path="/result" element={<ResultsPage/>} />
+        <Route path="/courses/:courseId" element={<CourseDetail />} />
         <Route path="/admin" element={token ? <Layout/> :<Login />}>
           <Route index element={<Dashboard />} />
           <Route path="subscribers" element={<Subscribers />} />
@@ -40,7 +56,6 @@ const App = () => {
           <Route path="imageList" element={ <ListImages/> } />
         </Route>
       </Routes>
-      <Footer/>
     </>
   )
 }
