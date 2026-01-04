@@ -39,7 +39,7 @@ export const uploadImage = async (req, res) => {
 
       await ImageModel.create({ name, image, isPublished })
       
-      res.json({success: true, message: "Image added successfully"})
+      res.json({success: true, message: "Image added"})
 
   } catch (error) {
       res.json({success: false, message: error.message})
@@ -60,7 +60,7 @@ export const deleteImageById = async (req, res) => {
     try {
         const { id } = req.body;
         await ImageModel.findByIdAndDelete(id);
-        res.json({success: true, message: 'Image deleted successfully'})
+        res.json({success: true, message: 'Image deleted'})
     } catch (error) {
         res.json({success: false, message: error.message})
     }

@@ -5,7 +5,8 @@ import connectDB from './config/db.js';
 import adminRouter from './routes/adminRoute.js';
 import router from './routes/newsletterRoutes.js';
 import imageRouter from './routes/imageRouter.js';
-
+import noticeRoute from './routes/noticeRoutes.js';
+import resultRoute from './routes/resultRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 8080
@@ -21,6 +22,8 @@ app.get('/', (req, res) => res.send('API is working '))
 app.use('/api/admin', adminRouter)
 app.use("/api/subscribers", router);
 app.use('/api/image', imageRouter)
+app.use('/api/notices', noticeRoute);
+app.use('/api/results',resultRoute )
 
 app.listen(port, () => {
     console.log(`Server is running on port : ${port}`)

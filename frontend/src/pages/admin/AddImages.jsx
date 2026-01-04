@@ -9,7 +9,7 @@ const AddImages = () => {
   const [isAdding, setIsAdding]= useState(false)
 
   const [image, setImage] = useState(false);
-  const [name, setName] = useState(false)
+  const [name, setName] = useState('')
   const [isPublished, setIsPublished] = useState(false);
 
 
@@ -27,7 +27,6 @@ const AddImages = () => {
       formData.append('image', image)
 
       const { data } = await axios.post('/api/image/add', formData)
-      console.log("API response:", data);
       
       if (data.success) {
         toast.success(data.message)
@@ -57,7 +56,7 @@ const AddImages = () => {
         </label>
 
         <p className='mt-4'>Name</p>
-        <input type="text" placeholder='Type here' required className='w-full max-w-lg mt-2 p-2 border border-gray-300 outline-none rounded' onChange={(e) => setName(e.target.value)} vlaue={name} />
+        <input type="text" placeholder='Type here' required className='w-full max-w-lg mt-2 p-2 border border-gray-300 outline-none rounded' onChange={(e) => setName(e.target.value)} value={name} />
 
         <div className='flex gap-2 mt-4'>
           <p>Publish Now</p>

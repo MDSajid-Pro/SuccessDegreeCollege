@@ -24,6 +24,8 @@ import NotFound from "./pages/NotFound"
 import AdmissionDetails from "./pages/AdmissionDetails"
 import CourseDetail from "./pages/CourseDetail"
 import ResultsPage from "./pages/ResultsPage"
+import AddNotice from "./pages/admin/AddNotice"
+import AddResult from "./pages/admin/AddResult"
 
 const App = () => {
 
@@ -53,7 +55,9 @@ const App = () => {
           <Route index element={<Dashboard />} />
           <Route path="subscribers" element={<Subscribers />} />
           <Route path="addImages" element={<AddImages />} />
-          <Route path="imageList" element={ <ListImages/> } />
+          <Route path="imageList" element={<ListImages />} />
+          <Route path="notice" element={<AddNotice />} />
+          <Route path="result" element={ <AddResult/> } />
         </Route>
       </Routes>
     </>
