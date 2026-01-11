@@ -16,11 +16,18 @@ const ManageAdmissions = () => {
 
   const BASE_URL = "http://localhost:4000";
 
-  const getFileUrl = (filePath) => {
-    if (!filePath) return "#";
-    const cleanPath = filePath.replace(/\\/g, "/");
-    return `${BASE_URL}/${cleanPath}`; 
-  };
+  const getFileUrl = (path) => {
+  if (!path) return '#';
+  
+  // 1. If it's already a full URL (Cloudinary), return it as is
+  if (path.startsWith('http') || path.startsWith('https')) {
+    return path;
+  }
+  
+  // 2. If it's a local file (old logic), append your backend URL
+  // (Only needed if you still have local uploads, otherwise remove this)
+  return `${BASE_URL}/${path.startsWith('/') ? path.slice(1) : path}`;
+};
 
   const formatDateForInput = (isoDate) => {
     if(!isoDate) return "";

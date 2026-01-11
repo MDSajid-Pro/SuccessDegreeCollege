@@ -1,5 +1,6 @@
 import AdmissionModel from '../models/admissionModel.js';// Ensure file extension is .js
 import transporter from "../config/nodemailer.js"
+import { cloudinary } from '../middleware/multer.js';
 
 // --- 2. Email Helper Function ---
 const sendEmail = async (to, subject, htmlContent) => {
@@ -144,14 +145,50 @@ export const updateAdmission = async (req, res) => {
 // @route   DELETE /api/admission/:id
 export const deleteAdmission = async (req, res) => {
   try {
-    const application = await AdmissionModel.findByIdAndDelete(req.params.id);
+    const id = req.params.id;
     
-    if (!application) {
-      return res.status(404).json({ success: false, message: "Application not found" });
+    // 1. Find the student
+    const student = await AdmissionModel.findById(id);
+    if (!student) {
+      return res.status(404).json({ message: "Student not found" });
     }
 
-    res.json({ success: true, message: "Application deleted successfully" });
+    const getPublicId = (url) => {
+      if (!url) return null;
+      const parts = url.split('/');
+      const filename = parts.pop().split('.')[0]; // Remove .jpg/.png
+      const folder = parts.pop();
+      const parentFolder = parts.pop();
+      return `${parentFolder}/${folder}/${filename}`;
+    };
+
+    // 3. Delete Photo from Cloudinary
+    if (student.photo) {
+       // Note: Your database likely saves the full URL now.
+       // If you saved just the public_id, you can skip the extraction step.
+       const publicId = getPublicId(student.photo); 
+       if (publicId) {
+           await cloudinary.uploader.destroy(publicId);
+       }
+    }
+
+    // 4. Delete Transcript from Cloudinary
+    if (student.transcript) {
+        // PDFs are often 'raw' or 'image' type depending on how uploaded. 
+        // For 'raw' files (PDFs), we must specify resource_type: 'raw'
+        const publicId = getPublicId(student.transcript);
+        if (publicId) {
+            await cloudinary.uploader.destroy(publicId, { resource_type: 'raw' });
+        }
+    }
+
+    // 5. Delete from Database
+    await AdmissionModel.findByIdAndDelete(id);
+
+    res.status(200).json({ message: "Student and files deleted successfully" });
+
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Error deleting data" });
   }
 };

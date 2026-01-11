@@ -1,4 +1,4 @@
-import FacultyModel from "../models/FacultyModel.js";
+import FacultyModel from "../models/facultyModel.js";
 
 // @desc    Add new faculty
 // @route   POST /api/faculty
