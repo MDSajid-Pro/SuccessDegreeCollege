@@ -74,6 +74,11 @@ const Footer = () => {
               </a>
             </li>
             <li>
+              <a href="https://uucms.karnataka.gov.in/Login/Index" target="_blank" className="hover:text-white">
+                UUCMS
+              </a>
+            </li>
+            <li>
               <a href="https://gug.ac.in" target="_blank" className="hover:text-white">
                 Gulbarga University
               </a>
@@ -97,15 +102,15 @@ const Footer = () => {
           <ul className="space-y-3 text-sm text-gray-300">
             <li className="flex items-start gap-3">
               <FiMapPin className="mt-1" />
-              <span>Gandhi Chowk, Basavakalyan, Karnataka – 585327</span>
+              <span>Gandhi Chowk, Behind Police Station, Basavakalyan, Karnataka – 585327</span>
             </li>
             <li className="flex items-center gap-3">
               <FiPhone />
-              <span>+91 7019830052</span>
+              <span>8549808439 / 8095808439 / 9986116170</span>
             </li>
             <li className="flex items-center gap-3">
               <FiMail />
-              <span>contact@successcollege.edu.in</span>
+              <span>successugpgcollege@gmail.com</span>
             </li>
           </ul>
         </div>

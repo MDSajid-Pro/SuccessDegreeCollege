@@ -82,12 +82,11 @@ const NavBar = () => {
           {/* Login Button */}
           {token ? (
             <HashLink
-              to="/"
-              onClick={logout}
-              className="ml-4 inline-flex items-center gap-2 px-2 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
+              to="/admin"
+              className="ml-4 inline-flex items-center gap-2 px-3 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
             >
               <FiUser className="text-lg" />
-              Logout
+              Login
             </HashLink>
           ) : (
             <HashLink
@@ -155,12 +154,12 @@ const NavBar = () => {
 
           {token ? (
             <HashLink
-              to="/"
-              onClick={logout}
+              to="/admin"
+              onClick={handleClose}
               className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
             >
               <FiUser className="text-lg" />
-              Logout
+              Login
             </HashLink>
           ) : (
             <HashLink

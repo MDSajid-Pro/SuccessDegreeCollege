@@ -10,6 +10,7 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AdmissionDetails = () => {
   // State for FAQ Accordion
@@ -80,9 +81,9 @@ const AdmissionDetails = () => {
             is designed to help us get to know the real you.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-2">
+            <Link to='/admission' className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-2">
               Apply Now <ArrowRight className="w-5 h-5" />
-            </button>
+            </Link>
             <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-semibold transition-all">
               Download Brochure
             </button>
@@ -112,7 +113,7 @@ const AdmissionDetails = () => {
               <HelpCircle className="w-6 h-6 text-purple-600" />
             </div>
             <h3 className="text-xl font-bold mb-2">Need Help?</h3>
-            <p className="text-slate-600">Contact our admission counselor at <span className="font-semibold text-purple-600">admissions@univ.edu</span>.</p>
+            <p className="text-slate-600">Contact our admission counselor at <span className="font-semibold text-purple-600">successugpgcollege@gmail.com</span>.</p>
           </div>
         </div>
       </div>
@@ -234,12 +235,12 @@ const AdmissionDetails = () => {
             Our support team is available 24/7 to guide you through the application process.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/25">
+            <Link to='/admission' className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/25">
               Start Application
-            </button>
-            <button className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all">
+            </Link>
+            <Link to='/contact' className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all">
               Contact Support
-            </button>
+            </Link>
           </div>
         </div>
       </div>

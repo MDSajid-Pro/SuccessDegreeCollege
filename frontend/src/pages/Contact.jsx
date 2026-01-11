@@ -1,22 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react'; // Import useRef
+import emailjs from '@emailjs/browser'; // Import EmailJS
 import { 
   MapPin, 
   Phone, 
-  Mail, 
-  Clock, 
+  Mail,  
   Send, 
   MessageSquare,
   Globe
 } from 'lucide-react';
 
 const ContactPage = () => {
-  const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success
+  const form = useRef(); // Create a reference to the form
+  const [formStatus, setFormStatus] = useState('idle'); // idle, submitting, success, error
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setFormStatus('submitting');
-    // Simulate API call
-    setTimeout(() => setFormStatus('success'), 1500);
+
+    const serviceKey = import.meta.env.VITE_APP_SERVICE_KEY;
+    const templateKey = import.meta.env.VITE_APP_TEMPLATE_KEY;
+    const apiKey = import.meta.env.VITE_APP_API_KEY;
+    // Replace these with your actual IDs from EmailJS dashboard
+    // Service ID, Template ID, Public Key
+    emailjs.sendForm(
+      serviceKey, 
+      templateKey, 
+      form.current, 
+      apiKey
+    )
+    .then((result) => {
+        console.log(result.text);
+        setFormStatus('success');
+        e.target.reset(); // Clear the form
+    }, (error) => {
+        console.log(error.text);
+        setFormStatus('error'); // Handle error state if needed
+        alert("Failed to send message. Please try again.");
+    });
   };
 
   const contactDepartments = [
@@ -60,8 +80,7 @@ const ContactPage = () => {
                   <div>
                     <h4 className="font-semibold text-slate-900">Main Campus</h4>
                     <p className="text-slate-500 text-sm mt-1">
-                      123 Innovation Blvd,<br />
-                      Academic District, NY 10012
+                      Gandhi Chowk, Behind Police Station, Basavakalyan, Karnataka – 585327
                     </p>
                   </div>
                 </div>
@@ -72,8 +91,8 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900">General Line</h4>
-                    <p className="text-slate-500 text-sm mt-1">+1 (555) 000-9999</p>
-                    <p className="text-xs text-slate-400 mt-1">Mon-Fri, 9am - 5pm</p>
+                    <p className="text-slate-500 text-sm mt-1">8549808439 / 8095808439</p>
+                    <p className="text-xs text-slate-400 mt-1">Mon-sat, 10 am - 5 pm</p>
                   </div>
                 </div>
 
@@ -83,7 +102,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-slate-900">Email Us</h4>
-                    <p className="text-slate-500 text-sm mt-1">info@univ.edu</p>
+                    <p className="text-slate-500 text-sm mt-1">successugpgcollege@gmail.com</p>
                   </div>
                 </div>
               </div>
@@ -136,12 +155,14 @@ const ContactPage = () => {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  // ADDED ref={form} here
+                  <form ref={form} onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label className="text-sm font-semibold text-slate-700">First Name</label>
                         <input 
                           type="text" 
+                          name="first_name" // ADDED Name attribute
                           required
                           className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                           placeholder="John"
@@ -151,6 +172,7 @@ const ContactPage = () => {
                         <label className="text-sm font-semibold text-slate-700">Last Name</label>
                         <input 
                           type="text" 
+                          name="last_name" // ADDED Name attribute
                           required
                           className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                           placeholder="Doe"
@@ -163,14 +185,18 @@ const ContactPage = () => {
                         <label className="text-sm font-semibold text-slate-700">Email Address</label>
                         <input 
                           type="email" 
+                          name="user_email" // ADDED Name attribute
                           required
                           className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none"
                           placeholder="john@example.com"
                         />
                       </div>
                       <div className="space-y-2">
-                        <label className="text-sm font-semibold text-slate-700">Subject</label>
-                        <select className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-slate-600">
+                        <label className="text-sm font-semibold text-slate-700">Inquiry Type</label>
+                        <select 
+                          name="inquiry_type" // ADDED Name attribute
+                          className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-slate-600"
+                        >
                           <option>General Inquiry</option>
                           <option>Admissions</option>
                           <option>Technical Support</option>
@@ -183,6 +209,7 @@ const ContactPage = () => {
                       <label className="text-sm font-semibold text-slate-700">Message</label>
                       <textarea 
                         rows="5"
+                        name="message" // ADDED Name attribute
                         required
                         className="w-full px-4 py-3 rounded-lg bg-slate-50 border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none"
                         placeholder="How can we help you today?"
@@ -204,20 +231,18 @@ const ContactPage = () => {
                 )}
               </div>
               
-              {/* Optional Map Embed Area */}
               <div className="h-64 bg-slate-200 w-full relative">
-                {/* Replace the src below with your actual Google Maps Embed Link */}
+                {/* Note: Ensure the src below is a valid Embed link from Google Maps */}
                 <iframe
-              className="rounded-lg w-full h-72 mt-16"
-               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3797.24705356675!2d76.94467237463759!3d17.873897888608784!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf3b7ae685d419%3A0x82689baedcadf431!2sSUCCESS%20UG%20%26%20PG%20COLLEGE%2C%20BASAVAKALYAN!5e0!3m2!1sen!2sin!4v1750866028640!5m2!1sen!2sin"
-              
-              width="100%" 
-                  height="100%" 
-                  style={{border:0}} 
-                  allowFullScreen="" 
-                  loading="lazy"
-                  title="Campus Map"
-            ></iframe>
+                    className="w-full h-full object-cover"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3806.963287661066!2d76.9535063!3d17.8732669!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bce8b0000000001%3A0x12345abcde!2sBasavakalyan!5e0!3m2!1sen!2sin!4v1234567890" 
+                    width="100%" 
+                    height="100%" 
+                    style={{border:0}} 
+                    allowFullScreen="" 
+                    loading="lazy"
+                    title="Campus Map"
+                ></iframe>
               </div>
             </div>
           </div>

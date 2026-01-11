@@ -122,7 +122,6 @@ const ResultsPage = () => {
               >
                 <option value="2024-25">Batch 2024-25</option>
                 <option value="2023-24">Batch 2023-24</option>
-                <option value="2022-23">Batch 2022-23</option>
             </select>
             <select 
                 value={selectedCourse}
@@ -130,10 +129,10 @@ const ResultsPage = () => {
                 className="p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="All">All Courses</option>
-                <option value="B.Sc">B.Sc</option>
-                <option value="BCA">BCA</option>
-                <option value="B.Com">B.Com</option>
                 <option value="B.A">B.A</option>
+                <option value="B.Sc">B.Sc</option>
+                <option value="B.Com">B.Com</option>
+                <option value="BCA">BCA</option>
             </select>
           </div>
           <div className="flex gap-3 w-full md:w-auto">

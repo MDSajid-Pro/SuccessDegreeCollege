@@ -26,6 +26,8 @@ import CourseDetail from "./pages/CourseDetail"
 import ResultsPage from "./pages/ResultsPage"
 import AddNotice from "./pages/admin/AddNotice"
 import AddResult from "./pages/admin/AddResult"
+import ManageAdmissions from "./pages/admin/ManageAdmissions"
+import AddFaculty from "./pages/admin/AddFaculty"
 
 const App = () => {
 
@@ -57,7 +59,9 @@ const App = () => {
           <Route path="addImages" element={<AddImages />} />
           <Route path="imageList" element={<ListImages />} />
           <Route path="notice" element={<AddNotice />} />
-          <Route path="result" element={ <AddResult/> } />
+          <Route path="result" element={<AddResult />} />
+          <Route path="manage-admission" element={<ManageAdmissions />} />
+          <Route path="manage-faculty" element={ <AddFaculty/> } />
         </Route>
       </Routes>
     </>
