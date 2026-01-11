@@ -18,6 +18,11 @@ connectDB()
 //Middlewares
 app.use(express.json())
 app.use(cors())
+app.use(cors({
+  origin: ["https://success-degree-college.vercel.app", "http://localhost:5173"], // Add your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 
 app.get('/', (req, res) => res.send('API is working '))
