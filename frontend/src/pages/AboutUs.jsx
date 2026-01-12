@@ -8,7 +8,7 @@ const AboutUs = () => {
         About Us
       </h2>
       <p className="text-gray-700 text-lg text-justify leading-relaxed max-w-6xl mx-auto mt-4">
-        Success Degree College was established with a commitment to providing quality higher education in the Kalyan Karnataka region. Affiliated to Gulbarga University and recognized by the Government of Karnataka, the college stands as a beacon of learning and empowerment. Situated in the heart of Kalaburagi, the college campus offers a vibrant academic atmosphere conducive to learning and holistic development.
+        Success Degree College was established with a commitment to providing quality higher education in the Kalyan Karnataka region. Affiliated to Bidar University and recognized by the Government of Karnataka, the college stands as a beacon of learning and empowerment. Situated in the heart of Kalaburagi, the college campus offers a vibrant academic atmosphere conducive to learning and holistic development.
         <br /><br />
         Success Degree College caters to the aspirations of students in the region by offering Undergraduate programmes aligned with the National Education Policy (NEP) 2020. We are dedicated to serving the socio-economically developing area of Kalaburagi, protected under the special provision for development under Article 371(J) of the Indian Constitution. Our institution focuses on academic excellence, skill development, and the overall transformation of our students.
       </p>

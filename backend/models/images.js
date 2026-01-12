@@ -4,6 +4,7 @@ const imageSchema = new mongoose.Schema(
   {
     image: { type: String, required: true },
     name: { type: String, required: true },
+    publicId: { type: String },
     isPublished: { type: Boolean, required: true },
   },
   { timestamps: true , versionKey: false }

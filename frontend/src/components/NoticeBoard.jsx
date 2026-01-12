@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useAppContext } from "../context/AppContext"; // 1. Import AppContext
+import { useAppContext } from "../context/AppContext";
 import { 
-  Bell, FileText, Megaphone, Pin 
+  Bell, FileText, Megaphone, Pin, ChevronLeft, ChevronRight 
 } from "lucide-react";
 
 // Helper to get icon based on category
@@ -15,18 +15,20 @@ const getIcon = (category) => {
 };
 
 const NoticeBoard = () => { 
-  // 2. Get axios from Context
   const { axios } = useAppContext();
 
   const [notices, setNotices] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
   const [loading, setLoading] = useState(true);
 
-  // 3. Fetch data using Context Axios
+  // --- PAGINATION STATE ---
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  // Fetch data
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        // Use relative path; baseURL is handled by AppContext
         const response = await axios.get('/api/notices');
         setNotices(response.data); 
         setLoading(false);
@@ -37,32 +39,44 @@ const NoticeBoard = () => {
     };
 
     fetchNotices();
-  }, [axios]); // Add axios to dependency array
+  }, [axios]);
+
+  // Reset to Page 1 when Tab changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeTab]);
 
   // Helper to format MongoDB Date
   const formatDate = (dateString) => {
     if (!dateString) return { month: '---', day: '--', full: 'No Date' };
-
     const date = new Date(dateString);
-
-    if (isNaN(date.getTime())) {
-      return { month: 'ERR', day: '!!', full: 'Invalid Format' };
-    }
+    if (isNaN(date.getTime())) return { month: 'ERR', day: '!!', full: 'Invalid Format' };
 
     return {
       month: date.toLocaleString('default', { month: 'short' }),
       day: date.getDate().toString().padStart(2, '0'),
-      full: date.toLocaleDateString('en-IN', { 
-        year: 'numeric', 
-        month: 'short', 
-        day: 'numeric' 
-      })
+      full: date.toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' })
     };
   };
 
+  // 1. Filter Logic
   const filteredNotices = activeTab === "All" 
     ? notices 
     : notices.filter(n => n.category === activeTab);
+
+  // 2. Pagination Logic
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentNotices = filteredNotices.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredNotices.length / itemsPerPage);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+  };
 
   return (
     <section className="py-20 bg-gray-50 font-sans">
@@ -79,7 +93,7 @@ const NoticeBoard = () => {
         </div>
 
         {/* MAIN CONTENT */}
-        <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden flex flex-col min-h-[500px]">
+        <div className="bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden flex flex-col min-h-[600px]">
            
            {/* Tabs */}
            <div className="flex items-center gap-2 p-2 bg-gray-50 border-b border-gray-100 overflow-x-auto">
@@ -103,7 +117,7 @@ const NoticeBoard = () => {
              {loading ? (
                 <p className="text-center py-10 text-gray-400">Loading notices...</p>
              ) : filteredNotices.length > 0 ? (
-               filteredNotices.map((notice) => {
+               currentNotices.map((notice) => { // CHANGED: Map over currentNotices
                  const dateObj = formatDate(notice.date);
                  
                  return (
@@ -152,6 +166,40 @@ const NoticeBoard = () => {
                </div>
              )}
            </div>
+
+           {/* --- PAGINATION FOOTER --- */}
+           {filteredNotices.length > itemsPerPage && (
+             <div className="p-4 border-t border-gray-100 bg-gray-50 flex justify-between items-center">
+                <button 
+                  onClick={prevPage} 
+                  disabled={currentPage === 1}
+                  className={`p-2 rounded-full border transition-all ${
+                    currentPage === 1 
+                    ? "text-gray-300 border-gray-200 cursor-not-allowed" 
+                    : "text-gray-600 border-gray-300 hover:bg-white hover:text-blue-600 shadow-sm"
+                  }`}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+
+                <span className="text-sm font-semibold text-gray-500">
+                  Page {currentPage} of {totalPages}
+                </span>
+
+                <button 
+                  onClick={nextPage} 
+                  disabled={currentPage === totalPages}
+                  className={`p-2 rounded-full border transition-all ${
+                    currentPage === totalPages 
+                    ? "text-gray-300 border-gray-200 cursor-not-allowed" 
+                    : "text-gray-600 border-gray-300 hover:bg-white hover:text-blue-600 shadow-sm"
+                  }`}
+                >
+                  <ChevronRight size={20} />
+                </button>
+             </div>
+           )}
+
         </div>
       </div>
       

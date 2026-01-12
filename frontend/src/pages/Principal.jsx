@@ -17,7 +17,7 @@ const Principal = () => {
         <img
           src={assets.principal}
           alt="Principal"
-          className="w-full max-w-md h-full rounded-md shadow-lg"
+          className="w-2/3 rounded-lg shadow-md"
         />
 
         <div className="mt-6">

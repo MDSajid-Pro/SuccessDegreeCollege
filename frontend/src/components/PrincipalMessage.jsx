@@ -15,8 +15,8 @@ const PrincipalMessage = () => {
           <div className="text-center">
             <img
               src={assets.principal}
-              alt="Vice Chancellor"
-              className="w-full max-w-md mx-auto rounded-lg shadow-md"
+              alt="Principal"
+              className="w-full rounded-lg shadow-md"
             />
             <h3 className="text-xl font-bold text-red-700 mt-4">Dr. Afroz Jahan</h3>
             <p className="text-gray-700">Principal</p>

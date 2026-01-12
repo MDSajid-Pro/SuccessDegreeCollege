@@ -132,11 +132,11 @@ const AdmissionForm = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Email <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">Email <span className="text-red-500">*</span><br />(Please provide a valid email)</label>
           <input type="email" name="email" value={formData.email} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none" placeholder="john@example.com" required />
         </div>
         <div>
-          <label className="block text-sm font-semibold text-slate-700 mb-2">Phone <span className="text-red-500">*</span></label>
+          <label className="block text-sm font-semibold text-slate-700 mb-2">Phone <span className="text-red-500">*</span><br />(Please provide a valid mobile number)</label>
           <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none" placeholder="1234567890" required />
         </div>
       </div>

@@ -17,26 +17,36 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    let folderName = 'uploads'; // Default
-    let resourceType = 'auto';  // Auto detect (image, raw for pdfs)
+    let folderName = 'uploads'; 
+    let resourceType = 'auto';  
 
     // Set folder based on field name
-    if (file.fieldname === 'photo') {
+    if (file.fieldname === 'photo' || file.fieldname === 'image') {
       folderName = 'college_uploads/images';
       resourceType = 'image';
     } else if (file.fieldname === 'transcript') {
       folderName = 'college_uploads/transcripts';
-      resourceType = 'raw'; // 'raw' is usually better for PDFs in Cloudinary to keep original name
+      resourceType = 'raw'; 
     }
+
+    // --- START OF FIX ---
+    
+    // Default: Remove extension (Best for Images, Cloudinary adds it back)
+    let publicId = path.parse(file.originalname).name; 
+
+    // Special Case: If it is a PDF (raw), we MUST keep the extension
+    if (resourceType === 'raw') {
+        publicId = file.originalname; // e.g., "myfile.pdf"
+    }
+
+    // --- END OF FIX ---
 
     return {
       folder: folderName,
       resource_type: resourceType,
-      // Use original name (remove extension because Cloudinary adds it automatically for images)
-      public_id: path.parse(file.originalname).name, 
-      // Keep the file extension for raw files (PDFs)
+      public_id: publicId, // Use the variable we created above
       use_filename: true, 
-      unique_filename: false, // Set to true if you don't want files overwriting each other
+      unique_filename: false, 
     };
   },
 });

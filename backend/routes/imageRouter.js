@@ -1,13 +1,14 @@
-import express from 'express'
-import { deleteImageById, getAllImages, togglePublished, uploadImage } from '../controllers/imageController.js'
-import upload from '../middleware/multer.js'
-import adminAuth from '../middleware/adminAuth.js'
+import express from 'express';
+import { uploadImage, getAllImages, deleteImageById, togglePublished } from '../controllers/imageController.js';
+import upload from '../middleware/multer.js'; // Import the upload middleware you created
 
-const imageRouter = express.Router()
+const imageRouter = express.Router();
 
-imageRouter.post('/add', upload.single('image'), adminAuth, uploadImage)
-imageRouter.get('/all', getAllImages)
-imageRouter.post('/delete', adminAuth, deleteImageById)
-imageRouter.post('/toggle-publish',adminAuth, togglePublished)
+// CHANGE THIS LINE: Use the middleware to handle the upload BEFORE the controller
+imageRouter.post('/add', upload.single('image'), uploadImage); 
+
+imageRouter.get('/all', getAllImages);
+imageRouter.post('/delete', deleteImageById);
+imageRouter.post('/toggle', togglePublished);
 
 export default imageRouter;

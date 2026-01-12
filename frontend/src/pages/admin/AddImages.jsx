@@ -18,31 +18,44 @@ const AddImages = () => {
       e.preventDefault();
       setIsAdding(true)
 
-      const img = {
-        name, isPublished,image
+      // 1. Create a metadata object (TEXT ONLY, NO FILE)
+      // This prevents the JSON.stringify from choking on the file object
+      const metaData = {
+        name,
+        isPublished
       }
 
       const formData = new FormData();
-      formData.append('Image', JSON.stringify(img))
+      
+      // 2. Append the file separately (This fixes the "taking too much time" issue)
       formData.append('image', image)
 
-      const { data } = await axios.post('/api/image/add', formData)
+      // 3. Append the metadata as a JSON string (This fixes the JSON error)
+      // Note: We use 'Image' (Capital I) because your previous code used it
+      formData.append('Image', JSON.stringify(metaData))
+
+      const { data } = await axios.post('/api/image/add', formData, {
+        headers: {
+            // explicit header helps boundaries
+          'Content-Type': 'multipart/form-data', 
+        }
+      })
       
       if (data.success) {
         toast.success(data.message)
-        setImage('')
+        setImage(false)
         setName('')
-        console.log(data)
+        setIsPublished(false)
       } else {
         toast.error(data.message)
       }
 
     } catch (error) {
+      console.error(error)
       toast.error(error.message)
     } finally {
       setIsAdding(false)
     }
-
   }
 
 

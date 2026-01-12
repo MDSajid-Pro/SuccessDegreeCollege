@@ -3,7 +3,7 @@ import menu_icon from "./menu_icon.svg";
 import logo2 from "./logo.png";
 import hero_image from "./hero_image.jpg";
 import about_image from "./about_image.jpg";
-import principal from "./Principal.jpg";
+import principal from "./Principal.png";
 import home_icon from "./home_icon.svg";
 import add_icon from "./add_icon.svg";
 import list_icon from "./list_icon.svg";

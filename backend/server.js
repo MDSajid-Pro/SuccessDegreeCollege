@@ -17,6 +17,8 @@ connectDB()
 
 //Middlewares
 app.use(express.json())
+//app.use(cors())
+
 app.use(cors({
   origin: ["https://success-degree-college.vercel.app"], // Add your frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"],

@@ -9,7 +9,8 @@ import {
   Loader2,
   ChevronLeft,
   ChevronRight,
-  Award // Icon for the new Qualification field
+  Award,
+  Linkedin
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -24,7 +25,9 @@ const Faculty = () => {
   
   // --- Pagination State ---
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 9; // Display only 9 per page
+  
+  // CHANGE: Display only 6 per page
+  const itemsPerPage = 6; 
 
   const departments = ["All", "Computer Science", "Commerce", "Arts", "Sciences"];
 
@@ -68,11 +71,17 @@ const Faculty = () => {
   const totalPages = Math.ceil(filteredFaculty.length / itemsPerPage);
 
   const nextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(prev => prev + 1);
+    if (currentPage < totalPages) {
+        setCurrentPage(prev => prev + 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on change
+    }
   };
 
   const prevPage = () => {
-    if (currentPage > 1) setCurrentPage(prev => prev - 1);
+    if (currentPage > 1) {
+        setCurrentPage(prev => prev - 1);
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on change
+    }
   };
 
   return (
@@ -167,7 +176,7 @@ const Faculty = () => {
                       <p className="text-blue-600 font-medium text-sm">{member.role}</p>
                   </div>
 
-                  {/* --- NEW FIELD: Qualification --- */}
+                  {/* Qualification */}
                   <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-1 bg-slate-50 p-2 rounded-lg w-fit">
                       <Award size={14} className="text-orange-500"/>
                       <span>{member.qualification || "Ph.D. Scholar"}</span>
@@ -197,34 +206,40 @@ const Faculty = () => {
             </div>
 
             {/* --- PAGINATION FOOTER --- */}
+            {/* Display Pagination if we have more than 6 items */}
             {filteredFaculty.length > itemsPerPage && (
-              <div className="mt-12 flex justify-center items-center gap-4">
+              <div className="mt-12 flex justify-center items-center gap-6">
+                
+                {/* Previous Button */}
                 <button 
                   onClick={prevPage}
                   disabled={currentPage === 1}
-                  className={`p-2 rounded-full border transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
                     currentPage === 1 
-                    ? "text-gray-300 border-gray-200 cursor-not-allowed" 
-                    : "text-slate-600 border-slate-300 hover:bg-slate-100 hover:text-blue-600"
+                    ? "text-gray-300 border-gray-200 cursor-not-allowed bg-gray-50" 
+                    : "text-slate-700 border-slate-300 bg-white hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 shadow-sm"
                   }`}
                 >
-                  <ChevronLeft size={24} />
+                  <ChevronLeft size={20} />
+                  <span className="font-medium text-sm">Previous</span>
                 </button>
 
                 <span className="text-sm font-semibold text-slate-500">
                   Page {currentPage} of {totalPages}
                 </span>
 
+                {/* Next Button */}
                 <button 
                   onClick={nextPage}
                   disabled={currentPage === totalPages}
-                  className={`p-2 rounded-full border transition-all ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all ${
                     currentPage === totalPages 
-                    ? "text-gray-300 border-gray-200 cursor-not-allowed" 
-                    : "text-slate-600 border-slate-300 hover:bg-slate-100 hover:text-blue-600"
+                    ? "text-gray-300 border-gray-200 cursor-not-allowed bg-gray-50" 
+                    : "text-slate-700 border-slate-300 bg-white hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200 shadow-sm"
                   }`}
                 >
-                  <ChevronRight size={24} />
+                  <span className="font-medium text-sm">Next</span>
+                  <ChevronRight size={20} />
                 </button>
               </div>
             )}
