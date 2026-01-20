@@ -16,8 +16,8 @@ const port = process.env.PORT || 8080
 connectDB()
 
 //Middlewares
-app.use(express.json())
 //app.use(cors())
+app.use(express.json())
 
 app.use(cors({
   origin: ["https://success-degree-college.vercel.app"], // Add your frontend URL
@@ -38,7 +38,7 @@ app.use('/uploads', express.static('uploads')); // Serve files publicly
 
 // ... routes
 app.use('/api/admission', admissionRouter);
-app.use('/api/faculty', facultyRouter )
+app.use('/api/faculty', facultyRouter)
 
 app.listen(port, () => {
     console.log(`Server is running on port : ${port}`)

@@ -26,7 +26,6 @@ const Faculty = () => {
   // --- Pagination State ---
   const [currentPage, setCurrentPage] = useState(1);
   
-  // CHANGE: Display only 6 per page
   const itemsPerPage = 6; 
 
   const departments = ["All", "Computer Science", "Commerce", "Arts", "Sciences"];
@@ -37,7 +36,11 @@ const Faculty = () => {
       try {
         const { data } = await axios.get('/api/faculty'); 
         if (data.success) {
-            setFacultyMembers(data.faculty);
+            // FIX: Sort the data based on the 'order' field before setting state
+            const sortedFaculty = data.faculty.sort((a, b) => {
+                return (a.order || 0) - (b.order || 0);
+            });
+            setFacultyMembers(sortedFaculty);
         }
         setLoading(false);
       } catch (error) {
@@ -73,14 +76,14 @@ const Faculty = () => {
   const nextPage = () => {
     if (currentPage < totalPages) {
         setCurrentPage(prev => prev + 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on change
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
         setCurrentPage(prev => prev - 1);
-        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top on change
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
     }
   };
 
@@ -206,7 +209,6 @@ const Faculty = () => {
             </div>
 
             {/* --- PAGINATION FOOTER --- */}
-            {/* Display Pagination if we have more than 6 items */}
             {filteredFaculty.length > itemsPerPage && (
               <div className="mt-12 flex justify-center items-center gap-6">
                 

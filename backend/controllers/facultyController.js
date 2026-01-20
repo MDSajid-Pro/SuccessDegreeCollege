@@ -44,3 +44,30 @@ export const deleteFaculty = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const reorderFaculty = async (req, res) => {
+    try {
+        const { updates } = req.body; // Expecting an array: [{ id: "...", order: 0 }, ...]
+
+        if (!updates || !Array.isArray(updates)) {
+            return res.status(400).json({ success: false, message: "Invalid data format" });
+        }
+
+        // Prepare bulk operations
+        const bulkOps = updates.map((item) => ({
+            updateOne: {
+                filter: { _id: item.id },
+                update: { $set: { order: item.order } }
+            }
+        }));
+
+        // Execute all updates in database
+        await FacultyModel.bulkWrite(bulkOps);
+
+        return res.status(200).json({ success: true, message: "Faculty reordered successfully" });
+
+    } catch (error) {
+        console.error("Reorder Error:", error);
+        return res.status(500).json({ success: false, message: "Server Error during reordering" });
+    }
+};

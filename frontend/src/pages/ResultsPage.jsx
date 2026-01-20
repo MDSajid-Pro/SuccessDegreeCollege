@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useAppContext } from "../context/AppContext"; // Import AppContext
+import { useAppContext } from "../context/AppContext";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import { 
   Trophy, 
   Search, 
@@ -7,46 +9,42 @@ import {
   GraduationCap, 
   Medal,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
 const ResultsPage = () => {
-  // --- 1. GET AXIOS FROM CONTEXT ---
   const { axios } = useAppContext();
 
   // --- STATE ---
   const [allStudents, setAllStudents] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
+  
   // Filters
   const [selectedYear, setSelectedYear] = useState("2024-25");
   const [selectedCourse, setSelectedCourse] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // --- PAGINATION STATE ---
+  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; 
 
-  // --- 2. FETCH DATA ---
+  // --- FETCH DATA ---
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Use relative path; baseURL is in AppContext
         const { data } = await axios.get('/api/results');
         setAllStudents(data);
         setLoading(false);
       } catch (err) {
         console.error("Error fetching data:", err);
-        setError("Failed to load results from server.");
         setLoading(false);
       }
     };
     fetchData();
-  }, [axios]); // Add axios to dependency array
+  }, [axios]);
 
-  // --- 3. FILTER LOGIC ---
+  // --- FILTER LOGIC (Must be defined BEFORE handleExportPDF) ---
   const filteredData = useMemo(() => {
     return allStudents.filter(student => {
       const matchYear = student.year === selectedYear;
@@ -57,38 +55,92 @@ const ResultsPage = () => {
     }).sort((a, b) => b.percentage - a.percentage);
   }, [allStudents, selectedYear, selectedCourse, searchTerm]);
 
-  // --- 4. PAGINATION LOGIC ---
-  
-  // Reset to page 1 whenever filters change
+  // --- EXPORT PDF FUNCTION (Updated) ---
+  const handleExportPDF = () => {
+    if (filteredData.length === 0) {
+      toast.error("No data to export!");
+      return;
+    }
+
+    const doc = new jsPDF();
+
+    // 1. Add Professional Header
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(37, 99, 235); // Blue-600 color
+    doc.text(`Academic Results Report: ${selectedYear}`, 14, 20);
+
+    // 2. Add Sub-header (Course & Date)
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(10);
+    doc.setTextColor(100); // Gray
+    doc.text(`Course: ${selectedCourse} `, 14, 28);
+
+    // 3. Define Columns
+    const tableColumn = ["Rank", "Reg No", "Student Name", "Course", "Percentage", "Grade"];
+
+    // 4. Map Filtered Data
+    const tableRows = filteredData.map((student, index) => [
+      index + 1,
+      student.regNo,
+      student.name,
+      student.course,
+      `${student.percentage}%`,
+      student.grade
+    ]);
+
+    // 5. Generate Table with Styling
+    autoTable(doc, {
+      startY: 35,
+      head: [tableColumn],
+      body: tableRows,
+      theme: 'grid',
+      styles: { 
+        fontSize: 10, 
+        font: "helvetica",
+        cellPadding: 3,
+      },
+      headStyles: { 
+        fillColor: [37, 99, 235], // Blue Header
+        textColor: 255, // White text
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: { 
+        fillColor: [240, 245, 255] // Very light blue for alternate rows
+      },
+      columnStyles: {
+        0: { halign: 'center', fontStyle: 'bold' }, // Rank column
+        4: { halign: 'right', fontStyle: 'bold' }, // Percentage column
+      }
+    });
+
+    // 6. Save File
+    doc.save(`Results_${selectedYear}_${selectedCourse}.pdf`);
+    toast.success("PDF Downloaded successfully!");
+  };
+
+  // --- PAGINATION HELPERS ---
   useEffect(() => {
     setCurrentPage(1);
   }, [selectedYear, selectedCourse, searchTerm]);
 
-  // Slice data for the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
-  
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   const alert = () => {
-    toast.error('Not found! try after some time.')
+    toast.error('Details not available yet.')
   }
 
-  // Handlers
   const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage((prev) => prev + 1);
-    }
+    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
   };
 
   const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
+    if (currentPage > 1) setCurrentPage((prev) => prev - 1);
   };
 
-  // Extract Top 3 (Spotlight)
   const topPerformers = filteredData.slice(0, 3);
 
   const getGradeColor = (grade) => {
@@ -146,7 +198,12 @@ const ResultsPage = () => {
                 className="pl-10 p-2.5 w-full bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <button className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition">
+            
+            {/* EXPORT BUTTON */}
+            <button
+              onClick={handleExportPDF}
+              className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 text-white rounded-xl shadow-lg shadow-blue-600/20 hover:bg-blue-700 transition"
+            >
               <Download size={18} /> <span className="hidden sm:inline">Export</span>
             </button>
           </div>
@@ -170,7 +227,7 @@ const ResultsPage = () => {
                   {index + 1}
                 </div>
                 <div>
-                  <h4 className="font-bold text-gray-900">{student.name}</h4>
+                  <h4 className="font-bold text-gray-900 line-clamp-1">{student.name}</h4>
                   <p className="text-sm text-gray-500">{student.course} • {student.percentage}%</p>
                 </div>
               </div>
@@ -185,7 +242,7 @@ const ResultsPage = () => {
           <table className="w-full text-sm text-left">
             <thead className="text-xs text-gray-500 uppercase bg-gray-50 border-b">
               <tr>
-                <th className="px-6 py-4">#</th>
+                <th className="px-6 py-4">Sl No</th>
                 <th className="px-6 py-4">Reg No.</th>
                 <th className="px-6 py-4">Student Name</th>
                 <th className="px-6 py-4">Course</th>
@@ -200,8 +257,8 @@ const ResultsPage = () => {
               ) : currentItems.length > 0 ? (
                 currentItems.map((student, index) => (
                   <tr key={student._id || index} className="hover:bg-blue-50/40 transition-colors">
-                    <td className="px-6 py-4 text-gray-400">
-                      {indexOfFirstItem + index + 1}
+                    <td className="px-6 py-4 text-gray-400 font-bold">
+                      #{indexOfFirstItem + index + 1}
                     </td>
                     <td className="px-6 py-4 font-mono text-gray-600">{student.regNo}</td>
                     <td className="px-6 py-4 font-semibold text-gray-900">{student.name}</td>
@@ -235,7 +292,6 @@ const ResultsPage = () => {
         {!loading && filteredData.length > 0 && (
           <div className="bg-gray-50 px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
             
-            {/* Left: Info Text */}
             <span className="font-medium">
               Showing <span className="text-gray-900 font-bold">{indexOfFirstItem + 1}</span> to{" "}
               <span className="text-gray-900 font-bold">
@@ -244,7 +300,6 @@ const ResultsPage = () => {
               of <span className="text-gray-900 font-bold">{filteredData.length}</span> students
             </span>
             
-            {/* Right: Buttons */}
             <div className="flex items-center gap-2">
               <button 
                 onClick={prevPage} 

@@ -8,6 +8,7 @@ const facultySchema = new mongoose.Schema({
   email: { type: String, required: true },
   qualification: { type: String, required: true },
   linkedin: { type: String, default: "" }, // Optional
+  order: { type: Number, default: 0 }
 }, { timestamps: true });
 
 const FacultyModel = mongoose.models.Faculty || mongoose.model("Faculty", facultySchema);
