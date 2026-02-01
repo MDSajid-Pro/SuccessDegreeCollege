@@ -2,7 +2,6 @@
 import Hero from './Hero'
 import PrincipalMessage from './PrincipalMessage'
 import Gallery from './Gallery'
-import About from './About'
 import FeaturedCourses from './FeaturedCourses'
 import WhyChooseUs from './WhyChooseUs'
 import Testimonials from './Testimonials'

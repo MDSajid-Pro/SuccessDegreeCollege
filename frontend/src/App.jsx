@@ -28,6 +28,8 @@ import AddNotice from "./pages/admin/AddNotice"
 import AddResult from "./pages/admin/AddResult"
 import ManageAdmissions from "./pages/admin/ManageAdmissions"
 import AddFaculty from "./pages/admin/AddFaculty"
+import AutoLogout from './components/admin/AutoLogout'
+import InquiryList from "./pages/admin/InquiryList"
 
 const App = () => {
 
@@ -40,7 +42,8 @@ const App = () => {
   return (
     <>
       <Toaster/>
-      <NavBar/>
+      <NavBar />
+      <AutoLogout timeoutMs={8 * 60 * 1000} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="*" element={ <NotFound/>} />
@@ -62,6 +65,7 @@ const App = () => {
           <Route path="result" element={<AddResult />} />
           <Route path="manage-admission" element={<ManageAdmissions />} />
           <Route path="manage-faculty" element={<AddFaculty />} />
+          <Route path="InquiryList" element={<InquiryList/>} />
         </Route>
       </Routes>
     </>

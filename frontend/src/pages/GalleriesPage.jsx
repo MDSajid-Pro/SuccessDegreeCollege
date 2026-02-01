@@ -13,7 +13,7 @@ const GalleriesPage = () => {
       setLoading(true);
       const { data } = await axios.get("/api/image/all");
       if (data.success) {
-        setGalleryImages(data.images);
+        setGalleryImages(data.images.reverse());
       } else {
         console.error(data.message);
       }

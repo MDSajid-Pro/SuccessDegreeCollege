@@ -31,7 +31,6 @@ const NoticeBoard = () => {
   const [loading, setLoading] = useState(true);
   
   // --- MODAL STATE ---
-  // We store the specific notice object here. If null, modal is closed.
   const [selectedNotice, setSelectedNotice] = useState(null);
 
   // --- PAGINATION STATE ---
@@ -61,14 +60,15 @@ const NoticeBoard = () => {
 
   // Helper to format MongoDB Date
   const formatDate = (dateString) => {
-    if (!dateString) return { month: "---", day: "--", full: "No Date" };
+    if (!dateString) return { month: "---", day: "--", year: "----", full: "No Date" };
     const date = new Date(dateString);
     if (isNaN(date.getTime()))
-      return { month: "ERR", day: "!!", full: "Invalid Format" };
+      return { month: "ERR", day: "!!", year: "!!!!", full: "Invalid Format" };
 
     return {
       month: date.toLocaleString("default", { month: "short" }),
       day: date.getDate().toString().padStart(2, "0"),
+      year: date.getFullYear(), // Added Year
       full: date.toLocaleDateString("en-IN", {
         year: "numeric",
         month: "long",
@@ -106,11 +106,9 @@ const NoticeBoard = () => {
 
   // --- CLICK HANDLER ---
   const handleNoticeClick = (notice) => {
-    // Check if link exists (checks for null, undefined, or empty string)
     if (notice.link) {
       window.open(notice.link, "_blank", "noopener,noreferrer");
     } else {
-      // Set the specific notice that failed so the modal can display its title
       setSelectedNotice(notice);
     }
   };
@@ -164,13 +162,16 @@ const NoticeBoard = () => {
                     key={notice._id}
                     className="group flex items-start gap-4 p-4 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-all cursor-pointer bg-white"
                   >
-                    {/* Date Box */}
-                    <div className="hidden sm:flex flex-col items-center justify-center min-w-[70px] bg-gray-50 rounded-lg p-2 border border-gray-100 group-hover:bg-white group-hover:border-blue-100 transition-colors">
+                    {/* Date Box - UPDATED TO SHOW YEAR */}
+                    <div className="hidden sm:flex flex-col items-center justify-center min-w-[80px] bg-gray-50 rounded-lg p-2 border border-gray-100 group-hover:bg-white group-hover:border-blue-100 transition-colors">
                       <span className="text-xs font-bold text-gray-400 uppercase">
                         {dateObj.month}
                       </span>
-                      <span className="text-xl font-bold text-gray-800">
+                      <span className="text-xl font-bold text-gray-800 leading-none my-0.5">
                         {dateObj.day}
+                      </span>
+                      <span className="text-xs font-medium text-gray-500">
+                        {dateObj.year}
                       </span>
                     </div>
 
@@ -189,26 +190,29 @@ const NoticeBoard = () => {
                         </span>
                       </div>
                       
-                      {/* --- The Trigger (Your Title) --- */}
+                      {/* --- Title & Desc (Removed line-clamp for full text) --- */}
                       <button
                         onClick={() => handleNoticeClick(notice)}
                         className="text-left w-full focus:outline-none"
                       >
-                        <h4 className="text-gray-900 font-semibold group-hover:text-blue-600 transition-colors line-clamp-1">
+                        <h4 className="text-gray-900 font-semibold group-hover:text-blue-600 transition-colors">
                           {notice.title}
                         </h4>
                       </button>
 
-                      <p className="text-sm text-gray-500 mt-1 line-clamp-2">
-                        {/* If you have description, put it here: {notice.description} */}
+                      {/* Description displayed fully if available */}
+                      <p className="text-sm text-gray-500 mt-1">
+                         {notice.description}
                       </p>
-                      <p className="text-xs text-gray-400 mt-1 sm:hidden">
+
+                      {/* Mobile Date (Small Screens) */}
+                      <p className="text-xs text-gray-400 mt-2 sm:hidden">
                         {dateObj.full}
                       </p>
                     </div>
 
                     <div className="h-full flex items-center">
-                      <div className="p-2 text-gray-400 group-hover:text-blue-600 group-hover:bg-blue-100 rounded-full transition-all">
+                      <div className="p-2 text-gray-400 group-hover:text-blue-600 group-hover:bg-blue-100 rounded-full transition-all shrink-0">
                         {getIcon(notice.category)}
                       </div>
                     </div>
@@ -261,7 +265,6 @@ const NoticeBoard = () => {
       {selectedNotice && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
           <div className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 transform transition-all scale-100">
-            {/* Modal Icon & Header */}
             <div className="flex flex-col items-center text-center">
               <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
                 <svg
@@ -291,9 +294,8 @@ const NoticeBoard = () => {
               </p>
             </div>
 
-            {/* Modal Action Button */}
             <button
-              onClick={() => setSelectedNotice(null)} // Close modal
+              onClick={() => setSelectedNotice(null)}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition-colors"
             >
               Close

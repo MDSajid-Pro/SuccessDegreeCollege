@@ -18,8 +18,13 @@ const PrincipalMessage = () => {
               alt="Principal"
               className="w-full rounded-lg shadow-md"
             />
-            <h3 className="text-xl font-bold text-red-700 mt-4">Dr. Afroz Jahan</h3>
-            <p className="text-gray-700">Principal</p>
+            <h3 className="text-xl font-bold text-red-700 mt-4">Principal - Dr. Afroz Jahan</h3>
+            <p className="text-gray-700 mt-2 flex items-center justify-center gap-2">
+    <span className="bg-red-50 text-red-700 text-sm font-semibold px-3 py-1 rounded-full border border-red-200 shadow-sm">
+      M.Sc, M.Ed, M.Phil., Ph.D
+    </span>
+  </p>
+            
           </div>
 
           {/* Right: Message */}
@@ -34,7 +39,7 @@ const PrincipalMessage = () => {
             {/* Read More Button */}
             <Link
               to="/principal"
-              className="inline-block mt-4 bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 transition"
+              className="inline-block mt-4 bg-red-600 text-white px-6 py-2 rounded-md hover:bg-white hover:text-red-700 border border-red-500 transition"
             >
               Read More
             </Link>

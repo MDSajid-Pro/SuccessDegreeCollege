@@ -5,7 +5,7 @@ import { HashLink } from "react-router-hash-link";
 const courses = [
   {
     title: "Bachelor of Science (B.Sc)",
-    description: "Explore the world of science with specializations in Physics, Chemistry, Mathematics, Botany, and Zoology.",
+    description: "Explore the world of science with specializations in Physics, Chemistry, Mathematics, Botany, Zoology and Computer Science.",
     icon: <Microscope size={40} />,
     color: "bg-blue-50",
     textColor: "text-blue-600",

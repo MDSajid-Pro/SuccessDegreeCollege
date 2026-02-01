@@ -31,8 +31,11 @@ const Principal = () => {
               Dr. Afroz Jahan
             </a>
           </h3>
+          <p className="p-2"><span className="bg-red-50 text-red-700 text-sm font-semibold px-3 py-1 rounded-full border border-red-200 shadow-sm">
+      M.Sc, M.Ed, M.Phil., Ph.D
+    </span></p>
           <p className="text-gray-600">
-            Principal, Success Degree Collage, Basavakalayan
+            Principal, Success Degree College, Basavakalayan
           </p>
         </div>
       </div>
