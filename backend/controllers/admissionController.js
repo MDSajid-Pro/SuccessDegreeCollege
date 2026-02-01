@@ -104,7 +104,7 @@ export const updateAdmission = async (req, res) => {
         emailSubject = "🎉 Admission Application Approved!";
         emailBody = `
           <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-width: 600px; border: 1px solid #ddd; border-radius: 10px;">
-            <h2 style="color: #166534;">Congratulations, ${updatedAdmission.firstName}!</h2>
+            <h2 style="color: #166534;">Congratulations, ${updatedAdmission.firstName} ${updatedAdmission.lastName}</h2>
             <p>We are pleased to inform you that your application for the <strong>${updatedAdmission.program}</strong> program has been <strong>APPROVED</strong>.</p>
             <p><strong>Application ID:</strong> ${updatedAdmission.applicationId}</p>
             <hr style="border: 1px solid #eee; margin: 20px 0;">
@@ -116,7 +116,7 @@ export const updateAdmission = async (req, res) => {
         emailBody = `
           <div style="font-family: Arial, sans-serif; padding: 20px; color: #333; max-width: 600px; border: 1px solid #ddd; border-radius: 10px;">
             <h2 style="color: #991b1b;">Application Status Update</h2>
-            <p>Dear ${updatedAdmission.firstName},</p>
+            <p>Dear ${updatedAdmission.firstName} ${updatedAdmission.lastName},</p>
             <p>We regret to inform you that your application (ID: ${updatedAdmission.applicationId}) has been <strong>REJECTED</strong>.</p>
             <p>If you believe this is an error, please contact the administration office.</p>
           </div>

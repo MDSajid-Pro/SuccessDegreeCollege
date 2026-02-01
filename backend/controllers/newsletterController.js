@@ -27,7 +27,7 @@ export const subscribeToNewsletter = async (req, res) => {
     res.json({ success: true, message: "Subscribed successfully!" });
 
     const mailOptions = {
-    from: process.env.SENDER_EMAIL,
+    from: `"Admin Success Degree College" <${process.env.SENDER_EMAIL}>`,
     to: email,
     subject: "Thanks for Subscribing!",
     html: `<h3>Hello ${name},</h3>

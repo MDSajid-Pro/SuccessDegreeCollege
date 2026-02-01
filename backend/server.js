@@ -9,6 +9,7 @@ import noticeRoute from './routes/noticeRoutes.js';
 import resultRoute from './routes/resultRoutes.js';
 import admissionRouter from './routes/admissionRoute.js';
 import facultyRouter from './routes/facultyRoute.js';
+import InquiryRouter from './routes/inquiryRoutes.js';
 
 const app = express();
 const port = process.env.PORT || 8080
@@ -38,7 +39,8 @@ app.use('/uploads', express.static('uploads')); // Serve files publicly
 
 // ... routes
 app.use('/api/admission', admissionRouter);
-app.use('/api/faculty', facultyRouter)
+app.use('/api/faculty', facultyRouter);
+app.use('/api/inquiries', InquiryRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on port : ${port}`)
