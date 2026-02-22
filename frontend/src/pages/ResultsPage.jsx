@@ -151,7 +151,7 @@ const ResultsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans">
+    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 font-sans pt-24">
       
       {/* Header */}
       <div className="max-w-7xl mx-auto mb-10 text-center">

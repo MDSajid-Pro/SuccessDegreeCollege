@@ -152,7 +152,7 @@ const AddResult = () => {
   return (
     <div className="min-h-screen w-full bg-gray-100 p-4 md:p-6 font-sans text-gray-800">
       {/* Top Bar */}
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8 pt-16">
         <h1 className="text-2xl font-bold flex items-center gap-2 text-gray-900">
           <LayoutDashboard className="text-blue-600" /> Result Management
         </h1>

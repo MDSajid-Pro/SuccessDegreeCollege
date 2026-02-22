@@ -62,7 +62,7 @@ const AdmissionDetails = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-12">
       
       {/* --- Hero Section --- */}
       <div className="relative bg-blue-900 text-white overflow-hidden">
@@ -155,7 +155,7 @@ const AdmissionDetails = () => {
                           <h3 className="text-2xl font-bold mb-6 text-blue-900">Required Documents</h3>
                           <h3 className='mb-6'>The candidate has to submit the Xerox copies of the following certificates along with the admission form and the original certificate at the time of admission.</h3>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {["SSLC Marks Card", "PUC Marks Card", "Degree All Marks Card", "Aadhar Card", "Valid Income & Cast Certificate", "Passport Size Photographs (12)"].map((item, idx) => (
+                {["SSLC Marks Card", "PUC Marks Card", "Transfer Certificate (TC).", "Aadhar Card", "Valid Income & Cast Certificate", "Passport Size Photographs (12)"].map((item, idx) => (
                   <li key={idx} className="flex items-center gap-3 bg-white p-3 rounded-lg border border-blue-100 shadow-sm">
                     <div className="w-2 h-2 rounded-full bg-blue-500" />
                     <span className="text-slate-700 font-medium">{item}</span>

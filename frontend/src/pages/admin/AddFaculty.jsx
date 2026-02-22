@@ -157,7 +157,7 @@ const AddFaculty = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10 w-full font-sans text-gray-800">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto pt-14">
         
         {/* HEADER */}
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">

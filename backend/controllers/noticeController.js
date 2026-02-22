@@ -59,6 +59,7 @@ export const updateNotice = async (req, res) => {
     notice.category = req.body.category || notice.category;
     notice.date = req.body.date || notice.date;
     notice.isNew = req.body.isNew || notice.isNew;
+    notice.link = req.body.link || notice.link;
 
     const updatedNotice = await notice.save();
     res.json(updatedNotice);

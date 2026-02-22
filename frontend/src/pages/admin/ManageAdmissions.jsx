@@ -119,7 +119,7 @@ const ManageAdmissions = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen w-full font-sans">
+    <div className="p-6 bg-gray-50 min-h-screen w-full font-sans pt-24">
       
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">

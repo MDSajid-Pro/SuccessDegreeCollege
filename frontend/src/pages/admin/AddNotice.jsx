@@ -128,7 +128,7 @@ export default function ManageNotices() {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 md:p-10 font-sans text-gray-800">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-6xl mx-auto pt-14">
         
         {/* HEADER */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

@@ -82,7 +82,7 @@ const InquiryList = () => {
   // --- MAIN RENDER ---
   return (
     <div className="w-screen bg-gray-50/50 p-4 md:p-8 font-sans">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto pt-14">
         
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">

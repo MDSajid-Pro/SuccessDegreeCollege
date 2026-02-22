@@ -4,7 +4,7 @@ import { assets } from "../../assets/assets";
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col bg-white border-r border-gray-200 min-h-screen pt-2">
+    <div className="flex flex-col bg-white border-r border-gray-200 min-h-screen pt-20">
       {/* --- MENU ITEMS --- */}
       <div className="flex-1">
         <NavLink

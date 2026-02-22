@@ -54,7 +54,7 @@ const Login = () => {
   }, [setToken, axios]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden font-sans">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 relative overflow-hidden font-sans pt-24">
       
       {/* --- BACKGROUND DECORATION --- */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">

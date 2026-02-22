@@ -80,7 +80,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col selection:bg-indigo-100 selection:text-indigo-700">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col selection:bg-indigo-100 selection:text-indigo-700 pt-20">
       
       {/* --- GLASS HEADER --- */}
       <header className="bg-white/70 backdrop-blur-lg border-b border-slate-200 sticky top-0 z-40 transition-all duration-300">

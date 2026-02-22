@@ -5,7 +5,7 @@ const Principal = () => {
   return (
     <section
       id="vice-chancellor"
-      className="bg-white py-12 px-4 md:px-8 lg:px-16"
+      className="bg-white py-12 px-4 md:px-8 lg:px-16 pt-24"
     >
       {/* Section Title */}
       <h2 className="text-3xl md:text-4xl font-bold text-blue-600 mb-2 border-b-4 border-red-500 inline-block pb-2">

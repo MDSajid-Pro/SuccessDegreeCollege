@@ -94,7 +94,7 @@ const ListImages = () => {
     <div className="min-h-screen bg-slate-50 p-6 md:p-10">
       
       {/* --- HEADER --- */}
-      <div className="flex flex-col sm:flex-row justify-between items-end mb-10 border-b border-slate-200 pb-6 sticky top-0 bg-slate-50/80 backdrop-blur-md z-20">
+      <div className="flex flex-col sm:flex-row justify-between items-end mb-10 border-b border-slate-200 pb-6 sticky top-0 bg-slate-50/80 backdrop-blur-md z-20 pt-20">
         <div>
           <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Gallery Manager</h2>
           <p className="text-slate-500 mt-1 text-sm font-medium">Manage your images.</p>

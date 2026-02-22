@@ -46,7 +46,7 @@ const GalleriesPage = () => {
   };
 
   return (
-    <section className="bg-gray-50 min-h-screen py-16 px-4 md:px-8 lg:px-16">
+    <section className="bg-gray-50 min-h-screen py-16 px-4 md:px-8 lg:px-16 pt-24">
       
       {/* Page Header */}
       <div className="text-center mb-12">

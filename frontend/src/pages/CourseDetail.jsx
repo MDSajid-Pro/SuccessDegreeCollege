@@ -122,7 +122,7 @@ const CourseDetail = () => {
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen">
+    <div className="bg-slate-50 min-h-screen pt-20">
       
       {/* --- HERO SECTION --- */}
       <div className={`relative py-24 px-6 overflow-hidden bg-gradient-to-br ${theme.gradient} text-white`}>

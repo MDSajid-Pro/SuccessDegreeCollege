@@ -4,7 +4,6 @@ import Home from "./components/Home"
 import Principal from './pages/Principal'
 import Contact from "./pages/Contact"
 import NavBar from "./components/NavBar"
-import Footer from "./components/Footer"
 import AboutUs from "./pages/AboutUs"
 import GalleriesPage from "./pages/GalleriesPage"
 import Login from "./components/admin/Login"
@@ -30,6 +29,9 @@ import ManageAdmissions from "./pages/admin/ManageAdmissions"
 import AddFaculty from "./pages/admin/AddFaculty"
 import AutoLogout from './components/admin/AutoLogout'
 import InquiryList from "./pages/admin/InquiryList"
+import TeachingStaff from "./pages/TeachingStaff"
+import NonTeachingStaff from "./pages/NonTeachingStaff"
+import AdministrativeStaff from "./pages/AdministrativeStaff"
 
 const App = () => {
 
@@ -56,6 +58,9 @@ const App = () => {
         <Route path="/admissionDetails" element={<AdmissionDetails />} />
         <Route path="/result" element={<ResultsPage/>} />
         <Route path="/courses/:courseId" element={<CourseDetail />} />
+        <Route path="/teaching-staff" element={<TeachingStaff />} />
+        <Route path="/non-teaching-staff" element={<NonTeachingStaff />} />
+        <Route path="/administrative-staff" element={<AdministrativeStaff/>} />
         <Route path="/admin" element={token ? <Layout/> :<Login />}>
           <Route index element={<Dashboard />} />
           <Route path="subscribers" element={<Subscribers />} />

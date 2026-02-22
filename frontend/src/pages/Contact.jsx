@@ -46,7 +46,7 @@ const ContactPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 pt-10">
       
       {/* --- Header Section --- */}
       <div className="bg-yellow-400 text-white py-20 px-4 relative overflow-hidden">
@@ -60,7 +60,7 @@ const ContactPage = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 relative z-10 pb-20">
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
           
           {/* --- Left Column: Contact Info & Map --- */}

@@ -1,179 +1,256 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { HashLink } from "react-router-hash-link";
-import { HiChevronDown, HiMenu, HiX } from "react-icons/hi";
-import { FiUser } from "react-icons/fi";
+import { HiChevronDown, HiChevronRight, HiMenuAlt3, HiX } from "react-icons/hi";
 import { assets, menuItems } from "../assets/assets";
-import { useAppContext } from "../context/AppContext";
 
-const NavBar = () => {
+// ==========================================
+// 1. DESKTOP MENU (Recursive & Fixed)
+// ==========================================
+
+function DesktopMenu({ items, depthLevel = 0 }) {
+  const isMainRow = depthLevel === 0;
+
+  return (
+    <ul className={isMainRow ? "flex items-center space-x-1" : "py-2"}>
+      {items.map((item, index) => (
+        <DesktopMenuItem key={index} item={item} depthLevel={depthLevel} />
+      ))}
+    </ul>
+  );
+}
+
+function DesktopMenuItem({ item, depthLevel }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const hasChildren = item.subLinks && item.subLinks.length > 0;
+
+  const dropdownPositionClass = depthLevel === 0 
+    ? "top-full left-0 pt-4" // pt-4 bridges the gap so mouse doesn't disconnect
+    : "top-0 left-full ml-[-2px]"; // Slight overlap to prevent gaps
+
+  return (
+    <li
+      className={`relative ${depthLevel === 0 ? "h-full flex items-center" : ""}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* --- Link / Label --- */}
+      <HashLink
+        smooth
+        to={item.to}
+        target={item.newTab ? "_blank" : undefined}
+        rel={item.newTab ? "noopener noreferrer" : undefined}
+        className={`
+          flex items-center justify-between whitespace-nowrap transition-colors duration-200
+          ${depthLevel === 0 
+            ? "px-4 py-2 text-sm font-bold text-gray-700 hover:text-blue-700" 
+            : "px-4 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 w-full" 
+          }
+        `}
+      >
+        <span>{item.label}</span>
+        
+        {/* Icons */}
+        {hasChildren && (
+          depthLevel === 0 
+            ? <HiChevronDown className={`ml-1 text-xs transition-transform ${isHovered ? "rotate-180" : ""}`} />
+            : <HiChevronRight className="ml-4 text-xs text-gray-400" />
+        )}
+      </HashLink>
+
+      {/* --- Recursive Dropdown --- */}
+      {hasChildren && (
+        <div
+          className={`
+            absolute ${dropdownPositionClass} z-50
+            transition-all duration-200 ease-in-out origin-top-left
+            ${isHovered ? "opacity-100 visible" : "opacity-0 invisible"}
+          `}
+        >
+          {/* White Box Container */}
+          <div className="bg-white rounded-lg shadow-xl border border-gray-100 min-w-[220px]">
+            <DesktopMenu items={item.subLinks} depthLevel={depthLevel + 1} />
+          </div>
+        </div>
+      )}
+    </li>
+  );
+}
+
+
+// ==========================================
+// 2. MOBILE MENU (Recursive Accordion)
+// ==========================================
+
+function MobileMenu({ items, closeMenu, depthLevel = 0 }) {
+  return (
+    <ul className="flex flex-col">
+      {items.map((item, index) => (
+        <MobileMenuItem 
+          key={index} 
+          item={item} 
+          closeMenu={closeMenu} 
+          depthLevel={depthLevel} 
+        />
+      ))}
+    </ul>
+  );
+}
+
+function MobileMenuItem({ item, closeMenu, depthLevel }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const { token, setToken } = useAppContext();
+  const hasChildren = item.subLinks && item.subLinks.length > 0;
 
-  const handleToggle = () => setIsOpen(!isOpen);
-  const handleClose = () => {
-    setIsOpen(false);
-    setOpenDropdown(null);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
+  const toggleOpen = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(!isOpen);
   };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50 p-3">
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-2">
-        {/* Logo */}
-        <div className="flex items-center gap-6">
-          <img src={assets.logo2} alt="Logo" className="h-16 w-auto" />
-          <div>
-            <h3 className="text-xl font-bold text-blue-700">ಸಕ್ಸೆಸ್  ಡಿಗ್ರಿ  ಕಾಲೇಜು</h3>
-            <h4 className="text-sm font-semibold text-blue-600">SUCCESS DEGREE COLLEGE</h4>
-          </div>
-        </div>
-
-        {/* Desktop Menu */}
-        <div className="hidden lg:flex items-center space-x-6">
-          <ul className="flex space-x-6 text-gray-800 font-medium">
-            {menuItems.map((item, index) => (
-              <li key={index} className="relative group">
-                <HashLink
-                  smooth
-                  to={item.to}
-                  className="hover:text-blue-600 transition flex items-center gap-1"
-                >
-                  {item.label}
-                  {item.subLinks && <HiChevronDown className="text-sm" />}
-                </HashLink>
-                {item.subLinks && (
-                  <ul className="absolute left-0 mt-2 bg-white shadow-lg rounded-lg opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-300 min-w-[18rem] z-50">
-                    {item.subLinks.map((subItem, subIdx) => (
-                      <li key={subIdx} className="relative group/sub">
-                        <HashLink
-                          to={subItem.to}
-                          className=" px-4 py-2 hover:bg-blue-100 text-sm flex justify-between items-center"
-                        >
-                          {subItem.label}
-                          {subItem.subLinks && <HiChevronDown className="ml-1 text-xs" />}
-                        </HashLink>
-                        {subItem.subLinks && (
-                          <ul className="absolute left-full top-0 bg-white shadow-lg rounded-lg opacity-0 group-hover/sub:opacity-100 invisible group-hover/sub:visible transition-all duration-300 min-w-[12rem] z-50">
-                            {subItem.subLinks.map((deep, deepIdx) => (
-                              <li key={deepIdx}>
-                                <HashLink
-                                  to={deep.to}
-                                  className="block px-4 py-2 hover:bg-blue-100 text-sm"
-                                >
-                                  {deep.label}
-                                </HashLink>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          {/* Login Button */}
-          {token ? (
-            <HashLink
-              to="/admin"
-              className="ml-4 inline-flex items-center gap-2 px-3 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-            >
-              <FiUser className="text-lg" />
-              Login
-            </HashLink>
-          ) : (
-            <HashLink
-              to="/admin"
-              className="ml-4 inline-flex items-center gap-2 px-3 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-            >
-              <FiUser className="text-lg" />
-              Login
-            </HashLink>
-          )}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button onClick={handleToggle} className="lg:hidden text-gray-800 focus:outline-none">
-          {isOpen ? <HiX className="text-3xl" /> : <HiMenu className="text-3xl" />}
-        </button>
-      </div>
-
-      {/* Mobile Sidebar */}
-      <div
-        className={`lg:hidden fixed top-0 right-0 h-full w-3/4 bg-white shadow-md z-40 transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+    <li className="select-none border-b border-gray-50 last:border-none">
+      <div 
+        className={`
+          flex justify-between items-center pr-4 py-3 cursor-pointer transition-colors
+          ${depthLevel === 0 ? "pl-2 hover:bg-gray-50" : ""} 
+          ${depthLevel > 0 ? "pl-4 hover:bg-blue-50/30" : ""}
+          ${isOpen && hasChildren ? "text-blue-700 bg-blue-50" : "text-gray-700"}
+        `}
+        style={{ paddingLeft: `${(depthLevel * 16) + 12}px` }} 
+        onClick={(e) => hasChildren ? toggleOpen(e) : closeMenu()}
       >
-        <button onClick={handleClose} className="absolute top-4 right-4 text-2xl">
-          <HiX />
-        </button>
+        {/* Label */}
+        {hasChildren ? (
+          <span className={`font-medium ${depthLevel === 0 ? "text-base" : "text-sm"}`}>
+            {item.label}
+          </span>
+        ) : (
+          <HashLink 
+            smooth 
+              to={item.to} 
+              target={item.newTab ? "_blank" : undefined}
+            rel={item.newTab ? "noopener noreferrer" : undefined}
+            className={`w-full block font-medium ${depthLevel === 0 ? "text-base" : "text-sm"}`}
+          >
+            {item.label}
+          </HashLink>
+        )}
 
-        <ul className="mt-20 px-6 text-base font-semibold text-gray-800 space-y-6">
-          {menuItems.map((item, index) => (
-            <li key={index}>
-              <div
-                onClick={() => setOpenDropdown(openDropdown === index ? null : index)}
-                className="flex justify-between items-center cursor-pointer"
-              >
-                <HashLink
-                  smooth
-                  to={item.to}
-                  className="hover:text-blue-600"
-                  onClick={handleClose}
-                >
-                  {item.label}
-                </HashLink>
-                {item.subLinks && (
-                  <span className="text-xl">{openDropdown === index ? "−" : "+"}</span>
-                )}
-              </div>
-
-              {item.subLinks && openDropdown === index && (
-                <ul className="mt-2 ml-4 space-y-2 text-sm font-normal">
-                  {item.subLinks.map((sub, idx) => (
-                    <li key={idx}>
-                      <HashLink
-                        smooth
-                        to={sub.to}
-                        className="block text-gray-700 hover:text-blue-500"
-                        onClick={handleClose}
-                      >
-                        {sub.label}
-                      </HashLink>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          ))}
-
-          {token ? (
-            <HashLink
-              to="/admin"
-              onClick={handleClose}
-              className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-            >
-              <FiUser className="text-lg" />
-              Login
-            </HashLink>
-          ) : (
-            <HashLink
-              to="/admin"
-              onClick={handleClose}
-              className="ml-4 inline-flex items-center gap-2 px-4 py-2 border border-blue-600 text-blue-600 rounded-full hover:bg-blue-600 hover:text-white transition"
-            >
-              <FiUser className="text-lg" />
-              Login
-            </HashLink>
-          )}
-        </ul>
+        {/* Arrow Icon */}
+        {hasChildren && (
+          <HiChevronDown 
+            className={`text-lg transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} 
+          />
+        )}
       </div>
-    </nav>
+
+      {/* Expandable Content */}
+      <div 
+        className={`
+          overflow-hidden transition-all duration-300 ease-in-out
+          ${isOpen ? "max-h-[1500px] opacity-100" : "max-h-0 opacity-0"}
+        `}
+      >
+        {hasChildren && (
+          <MobileMenu items={item.subLinks} closeMenu={closeMenu} depthLevel={depthLevel + 1} />
+        )}
+      </div>
+    </li>
+  );
+}
+
+
+// ==========================================
+// 3. MAIN NAVBAR (Fixed)
+// ==========================================
+
+const NavBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleToggle = () => setIsOpen(!isOpen);
+  const handleClose = () => setIsOpen(false);
+
+  return (
+    <>
+      {/* --- Main Navigation Bar --- */}
+      <nav
+        className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/95 backdrop-blur-md shadow-md border-b border-gray-100"
+            : "bg-white border-b border-transparent"
+        }`}
+      >
+        <div className="max-w-full mx-auto flex justify-between items-center px-4 py-2 sm:px-6 lg:px-8">
+          
+          {/* Logo */}
+          <HashLink smooth to="/#top" className="flex items-center gap-3 sm:gap-4 group z-50">
+            <img 
+              src={assets.logo2} 
+              alt="Logo" 
+              className="h-10 w-auto sm:h-14 transition-transform group-hover:scale-105 duration-300" 
+            />
+            <div className="flex flex-col">
+              <h3 className="text-base sm:text-xl font-bold text-blue-900 leading-tight">
+                ಸಕ್ಸೆಸ್ ಡಿಗ್ರಿ ಕಾಲೇಜು
+              </h3>
+              <h4 className="text-[10px] sm:text-sm font-semibold text-blue-600 tracking-wide">
+                SUCCESS DEGREE COLLEGE
+              </h4>
+            </div>
+          </HashLink>
+
+          {/* Desktop Menu */}
+          <div className="hidden lg:block">
+            <DesktopMenu items={menuItems} />
+          </div>
+
+          {/* Mobile Button */}
+          <button 
+            onClick={handleToggle} 
+            className="lg:hidden p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors z-50"
+          >
+            {isOpen ? <HiX className="text-2xl" /> : <HiMenuAlt3 className="text-2xl" />}
+          </button>
+        </div>
+      </nav>
+
+      {/* MOVED OUTSIDE: 
+         The sidebar components are now siblings to <nav>, not children.
+         This prevents the 'backdrop-blur' on nav from breaking the sidebar's fixed position.
+      */}
+
+      {/* Mobile Sidebar Overlay */}
+      <div 
+        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-[60] lg:hidden transition-opacity duration-300 ${
+          isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={handleClose}
+      />
+
+      {/* Mobile Sidebar Menu */}
+      <div
+        className={`fixed top-0 right-0 h-full w-[85%] max-w-sm bg-white shadow-2xl z-[60] transform transition-transform duration-300 ease-out flex flex-col ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="p-5 border-b border-gray-100 flex justify-between items-center bg-gray-50/80">
+          <span className="font-bold text-lg text-blue-900">Menu</span>
+          <button onClick={handleClose} className="p-2 text-gray-500 hover:text-red-500 rounded-full hover:bg-red-50 transition-colors">
+            <HiX className="text-2xl" />
+          </button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto py-2">
+          <MobileMenu target="_blank" items={menuItems} closeMenu={handleClose} />
+        </div>
+      </div>
+    </>
   );
 };
 
