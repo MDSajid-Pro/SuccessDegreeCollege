@@ -13,7 +13,7 @@ import bin_icon from "./bin_icon.svg"
 import upload_area from './upload_area.svg'
 import Banner from './Banner.png'
 import Face from './face.png'
-import img from './img.jpg'
+import img from './Img.jpg'
 
 export const assets = {
   cross_icon,
