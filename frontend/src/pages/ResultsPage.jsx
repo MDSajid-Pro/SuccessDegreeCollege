@@ -171,9 +171,10 @@ const ResultsPage = () => {
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
                 className="p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="2024-25">Batch 2024-25</option>
+            >
                 <option value="2023-24">Batch 2023-24</option>
+                <option value="2024-25">Batch 2024-25</option>
+                <option value="2025-26">Batch 2025-26</option>
             </select>
             <select 
                 value={selectedCourse}
@@ -258,7 +259,7 @@ const ResultsPage = () => {
                 currentItems.map((student, index) => (
                   <tr key={student._id || index} className="hover:bg-blue-50/40 transition-colors">
                     <td className="px-6 py-4 text-gray-400 font-bold">
-                      #{indexOfFirstItem + index + 1}
+                      {indexOfFirstItem + index + 1}
                     </td>
                     <td className="px-6 py-4 font-mono text-gray-600">{student.regNo}</td>
                     <td className="px-6 py-4 font-semibold text-gray-900">{student.name}</td>

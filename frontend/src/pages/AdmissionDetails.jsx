@@ -8,7 +8,10 @@ import {
   Download, 
   HelpCircle,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  Monitor,
+  ShieldCheck,
+  CreditCard
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -21,44 +24,60 @@ const AdmissionDetails = () => {
   };
 
   // --- Data ---
-  const admissionSteps = [
+  
+  // Updated Steps based on UUCMS Procedure
+  const uucmsSteps = [
     {
       id: 1,
-      title: "Online Registration",
-      desc: "Create an account on our portal and fill out the basic personal details.",
-      icon: <FileText className="w-6 h-6 text-blue-600" />
+      title: "Student Registration",
+      desc: "Register on the UUCMS portal. Create a profile using an Aadhaar-linked mobile number for OTP verification.",
+      icon: <Monitor className="w-6 h-6 text-blue-600" />
     },
     {
       id: 2,
-      title: "Document Upload",
-      desc: "Scan and upload your academic transcripts, ID proof, and photographs.",
-      icon: <Download className="w-6 h-6 text-blue-600" />
+      title: "Form Filling & Selection",
+      desc: "Log in to fill the application form. Choose your desired University, College, and Course/Program (you can apply to multiple colleges).",
+      icon: <FileText className="w-6 h-6 text-blue-600" />
     },
     {
       id: 3,
-      title: "Entrance Exam",
-      desc: "Schedule and complete the online aptitude test or submit standardized scores.",
-      icon: <CheckCircle className="w-6 h-6 text-blue-600" />
+      title: "Document Upload",
+      desc: "Upload scanned copies (PDF/JPG) of 10th/12th marks cards, caste/income certificates (if applicable), photo, and signature.",
+      icon: <Download className="w-6 h-6 text-blue-600" />
     },
     {
       id: 4,
-      title: "Final Interview",
-      desc: "Shortlisted candidates will be invited for a personal interview with faculty.",
-      icon: <GraduationCap className="w-6 h-6 text-blue-600" />
+      title: "Verification & Approval",
+      desc: "Colleges verify documents online. Seat allocation is based on merit, reservation policies, and availability. You will be notified via the portal.",
+      icon: <ShieldCheck className="w-6 h-6 text-blue-600" />
+    },
+    {
+      id: 5,
+      title: "Fee Payment & Confirmation",
+      desc: "Pay admission/exam fees exclusively through the UUCMS portal. Upon payment, your admission is confirmed and an Enrollment Number is generated.",
+      icon: <CreditCard className="w-6 h-6 text-blue-600" />
     }
   ];
 
   const importantDates = [
     { event: "Applications Open", date: "Jan 15, 2026", status: "Completed" },
     { event: "Early Bird Deadline", date: "Mar 01, 2026", status: "Active" },
-    { event: "Entrance Exam", date: "Apr 10, 2026", status: "Upcoming" },
+    { event: "Document Verification", date: "Apr 10, 2026", status: "Upcoming" },
     { event: "Final Merit List", date: "May 20, 2026", status: "Upcoming" }
   ];
 
   const faqs = [
     { q: "Is there an application fee?", a: "Yes, a non-refundable fee of 100rs is required upon submission." },
-    { q: "Can I apply for multiple courses?", a: "Yes, you can apply for up to 3 programs with a single account." },
+    { q: "Can I apply for multiple courses?", a: "Yes, through the UUCMS portal, you can apply to multiple colleges and indicate your preferences." },
     { q: "Do you offer scholarships?", a: "We offer merit-based and need-based scholarships. Visit the Financial Aid page for details." }
+  ];
+
+  const uucmsFeatures = [
+    "Student Life Cycle Management",
+    "Academic Monitoring (Attendance & Lesson Planning)",
+    "End-to-end Examinations & Results",
+    "Faculty & Staff Management",
+    "Administrative & Finance Functions"
   ];
 
   return (
@@ -71,22 +90,21 @@ const AdmissionDetails = () => {
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
           <span className="inline-block py-1 px-3 rounded-full bg-blue-500/30 border border-blue-400 text-blue-200 text-sm font-semibold mb-6">
-            Admissions 2026-27
+            Admissions 2026-27 | Powered by UUCMS
           </span>
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-6">
             Shape Your Future <br /> At <span className="text-blue-400">Success Degree College</span>
           </h1>
           <p className="text-lg text-blue-100 max-w-2xl mb-10 leading-relaxed">
-            Join a vibrant community of innovators and leaders. Our simplified admission process 
-            is designed to help us get to know the real you.
+            Join a vibrant community of innovators and leaders. Our admissions are now fully integrated with the Government of Karnataka's UUCMS platform for a seamless, merit-based experience.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link to='/admission' className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-2">
-              Apply Now <ArrowRight className="w-5 h-5" />
-            </Link>
-            <button className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-semibold transition-all">
-              Download Brochure
-            </button>
+            <a href='https://uucms.karnataka.gov.in/Login/OnlineStudentRegistrationForm' target='_blank' className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg hover:shadow-blue-500/25 flex items-center gap-2">
+              Apply via UUCMS <ArrowRight className="w-5 h-5" />
+            </a>
+            <a href='https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_2c70b9009a9c4fc4b24acb22d1a547d2.pdf' target='_blank' className="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/20 px-8 py-4 rounded-xl font-semibold transition-all flex items-center gap-2">
+              <Download className="w-5 h-5" /> Student Manual
+            </a>
           </div>
         </div>
       </div>
@@ -105,15 +123,15 @@ const AdmissionDetails = () => {
             <div className="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center mb-4">
               <CheckCircle className="w-6 h-6 text-green-600" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Eligibility Check</h3>
-            <p className="text-slate-600">Minimum 3.0 GPA required for undergraduate programs.</p>
+            <h3 className="text-xl font-bold mb-2">100% Online Process</h3>
+            <p className="text-slate-600">Admissions are fully online, merit-based, and first-come-first-serve via UUCMS.</p>
           </div>
           <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
             <div className="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center mb-4">
               <HelpCircle className="w-6 h-6 text-purple-600" />
             </div>
             <h3 className="text-xl font-bold mb-2">Need Help?</h3>
-            <p className="text-slate-600">Contact our admission counselor at <span className="font-semibold text-purple-600">successugpgcollege@gmail.com</span>.</p>
+            <p className="text-slate-600">UUCMS Helpdesk: <span className="font-semibold text-purple-600">uucms.helpdesk@gmail.com</span></p>
           </div>
         </div>
       </div>
@@ -125,25 +143,41 @@ const AdmissionDetails = () => {
           {/* Left Column (Process & Requirements) */}
           <div className="lg:col-span-2 space-y-16">
             
+            {/* About UUCMS Section */}
+            <section className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+              <h2 className="text-2xl font-bold mb-4 text-slate-800">About UUCMS</h2>
+              <p className="text-slate-600 mb-6 leading-relaxed">
+                The <strong>Unified University & College Management System (UUCMS)</strong> is a flagship digital platform launched by the Government of Karnataka to streamline higher education across the state. It integrates administrative and academic functions for 33+ public universities and 3,500+ colleges under one centralized portal.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {uucmsFeatures.map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2 text-sm text-slate-700 font-medium">
+                    <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </section>
+
             {/* Admission Steps */}
             <section>
               <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                Admission Process
+                UUCMS Admission Procedure
               </h2>
               <div className="space-y-6">
-                {admissionSteps.map((step) => (
+                {uucmsSteps.map((step) => (
                   <div key={step.id} className="flex gap-4 group">
                     <div className="flex flex-col items-center">
                       <div className="w-12 h-12 rounded-full bg-white border-2 border-blue-100 flex items-center justify-center shrink-0 group-hover:border-blue-500 transition-colors shadow-sm">
                         {step.icon}
                       </div>
-                      {step.id !== admissionSteps.length && (
+                      {step.id !== uucmsSteps.length && (
                         <div className="w-0.5 h-full bg-slate-200 my-2 group-hover:bg-blue-200 transition-colors" />
                       )}
                     </div>
                     <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm w-full hover:shadow-md transition-shadow">
                       <h4 className="text-lg font-bold mb-2">{step.title}</h4>
-                      <p className="text-slate-600">{step.desc}</p>
+                      <p className="text-slate-600 leading-relaxed">{step.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -152,10 +186,19 @@ const AdmissionDetails = () => {
 
             {/* Documents Checklist */}
             <section className="bg-blue-50 rounded-2xl p-8 border border-blue-100">
-                          <h3 className="text-2xl font-bold mb-6 text-blue-900">Required Documents</h3>
-                          <h3 className='mb-6'>The candidate has to submit the Xerox copies of the following certificates along with the admission form and the original certificate at the time of admission.</h3>
+              <h3 className="text-2xl font-bold mb-4 text-blue-900">Required Documents</h3>
+              <p className='mb-6 text-blue-800'>
+                The candidate has to upload scanned copies (PDF/JPG) on the UUCMS portal and submit Xerox copies along with the original certificates at the time of physical admission.
+              </p>
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {["SSLC Marks Card", "PUC Marks Card", "Transfer Certificate (TC).", "Aadhar Card", "Valid Income & Cast Certificate", "Passport Size Photographs (12)"].map((item, idx) => (
+                {[
+                  "SSLC / 10th Marks Card", 
+                  "PUC / 12th Marks Card", 
+                  "Transfer Certificate (TC)", 
+                  "Aadhaar Card", 
+                  "Valid Caste/Income Certificate (for reservations)", 
+                  "Passport Size Photographs & Signature"
+                ].map((item, idx) => (
                   <li key={idx} className="flex items-center gap-3 bg-white p-3 rounded-lg border border-blue-100 shadow-sm">
                     <div className="w-2 h-2 rounded-full bg-blue-500" />
                     <span className="text-slate-700 font-medium">{item}</span>
@@ -168,6 +211,17 @@ const AdmissionDetails = () => {
           {/* Right Column (Sidebar: Dates & FAQ) */}
           <div className="space-y-8">
             
+            {/* Student Manual Download Card */}
+            <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl shadow-lg p-6 text-white text-center">
+              <FileText className="w-12 h-12 mx-auto mb-4 text-blue-200" />
+              <h3 className="text-xl font-bold mb-2">UUCMS Student Manual</h3>
+              <p className="text-blue-100 text-sm mb-6">Download the official guide for step-by-step instructions on navigating the UUCMS portal.</p>
+              <a href="https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_2c70b9009a9c4fc4b24acb22d1a547d2.pdf" target='_blank' className="w-full bg-white text-blue-700 hover:bg-blue-50 py-3 rounded-xl font-bold transition-colors flex justify-center items-center gap-2">
+                <Download className="w-5 h-5" /> Download PDF
+              </a>
+              <a href=""></a>
+            </div>
+
             {/* Important Dates Widget */}
             <div className="bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
               <div className="bg-slate-900 p-6 text-white">
@@ -228,19 +282,19 @@ const AdmissionDetails = () => {
       </div>
 
       {/* --- Call to Action Footer --- */}
-      <div className="bg-slate-900 py-16 m-5 border rounded">
+      <div className="bg-slate-900 py-16 m-5 border rounded-2xl">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Ready to begin your journey?</h2>
           <p className="text-slate-400 mb-8 text-lg">
-            Our support team is available 24/7 to guide you through the application process.
+            Our support team is available to guide you through the UUCMS application process.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Link to='/admission' className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/25">
+            <Link to='#' className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-blue-600/25">
               Start Application
             </Link>
-            <Link to='/contact' className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all">
-              Contact Support
-            </Link>
+            <a href="mailto:uucms.helpdesk@gmail.com" className="bg-transparent border border-slate-600 text-white hover:bg-slate-800 px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2">
+              <HelpCircle className="w-5 h-5" /> Contact UUCMS Support
+            </a>
           </div>
         </div>
       </div>

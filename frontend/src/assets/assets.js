@@ -13,6 +13,7 @@ import bin_icon from "./bin_icon.svg"
 import upload_area from './upload_area.svg'
 import Banner from './Banner.png'
 import Face from './face.png'
+import Aliya from './Aliya-Anjum.png'
 import img from './Img.jpg'
 
 export const assets = {
@@ -31,6 +32,7 @@ export const assets = {
   upload_area,
   Banner,
   Face,
+  Aliya,
   img
 };
 
@@ -66,7 +68,6 @@ export const menuItems = [
   {
     label: "ACADAMICS",
     subLinks: [
-      { label: "Our Faculty", to: "/faculty" },
       { label: 'Academic Results', to: '/result' },
       {
         label: 'Time Table', subLinks: [
@@ -126,7 +127,7 @@ export const menuItems = [
   {
     label: "ADMISSION",
     subLinks: [
-      { label: 'Online Admission', to: '/admission' },
+      { label: 'Online Admission', to: 'https://uucms.karnataka.gov.in/Login/OnlineStudentRegistrationForm',newTab: true },
       { label: 'Admission Details', to: '/admissionDetails' }
     ],
   },

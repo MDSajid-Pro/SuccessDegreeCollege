@@ -350,6 +350,7 @@ const AddResult = () => {
                     className="border border-gray-300 p-2.5 rounded-lg w-full focus:ring-2 focus:ring-blue-500 outline-none bg-white"
                   >
                     <option>---Select Year---</option>
+                    <option>2025-26</option>
                     <option>2024-25</option>
                     <option>2023-24</option>
                   </select>

@@ -10,6 +10,7 @@ const TeachingStaff = () => {
   { id: 4, name: "Shaikh Zeba", qual: "M.Sc., B.Ed.", desig: "Lecturer", dept: "Department of Science" },
   { id: 5, name: "Mehbooba Begum", qual: "M.Sc., B.Ed.", desig: "Lecturer", dept: "Department of Science" },
   { id: 6, name: "Kaveri", qual: "M.Sc., B.Ed.", desig: "Lecturer", dept: "Department of Science" },
+  {id: 5, name: "Md Sajid", qual: "M.Sc., B.Ed.", desig: "Lecturer", dept: "Department of Science"},
   { id: 7, name: "Mehraj", qual: "M.Sc. Cs", desig: "Lecturer", dept: "Computer Applications" },
   { id: 8, name: "Taranum Begum", qual: "B.Tech. Cs", desig: "Lecturer", dept: "Computer Applications" },
   { id: 9, name: "Karan", qual: "MCA", desig: "Lecturer", dept: "Computer Applications" },

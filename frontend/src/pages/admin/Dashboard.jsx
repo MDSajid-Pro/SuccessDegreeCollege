@@ -222,7 +222,7 @@ const Dashboard = () => {
                          accent="purple"
                       />
                       <ActionCard 
-                         to="/admin/manage-admission"
+                         to="#"
                          title="Admissions"
                          desc="Review new student applications."
                          icon={<Users size={28} />}
