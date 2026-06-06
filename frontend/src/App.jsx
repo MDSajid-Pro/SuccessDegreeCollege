@@ -28,6 +28,10 @@ import InquiryList from "./pages/admin/InquiryList"
 import TeachingStaff from "./pages/TeachingStaff"
 import NonTeachingStaff from "./pages/NonTeachingStaff"
 import AdministrativeStaff from "./pages/AdministrativeStaff"
+import Library from "./pages/Library"
+import UniversityRankHolders from "./pages/UniversityRankHolders"
+import ApprovalsAffiliation from "./pages/ApprovalsAffiliation"
+import ChairmanMessage from "./pages/ChairmanMessage"
 
 const App = () => {
 
@@ -54,7 +58,11 @@ const App = () => {
         <Route path="/courses/:courseId" element={<CourseDetail />} />
         <Route path="/teaching-staff" element={<TeachingStaff />} />
         <Route path="/non-teaching-staff" element={<NonTeachingStaff />} />
-        <Route path="/administrative-staff" element={<AdministrativeStaff/>} />
+        <Route path="/administrative-staff" element={<AdministrativeStaff />} />
+        <Route path="/library" element={<Library />} />
+        <Route path="/topper" element={<UniversityRankHolders />} />
+        <Route path="/approval-affiliation" element={<ApprovalsAffiliation />} />
+        <Route path="/chairman-message" element={<ChairmanMessage/>} />
         <Route path="/admin" element={token ? <Layout/> :<Login />}>
           <Route index element={<Dashboard />} />
           <Route path="subscribers" element={<Subscribers />} />

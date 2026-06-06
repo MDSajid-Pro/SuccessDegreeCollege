@@ -47,15 +47,13 @@ export const menuItems = [
       { label: "Mission & Vission", to: "/mission" },
       { label: "Principal Message", to: '/principal' },
       { label: "Awards & Achievements", to: '#' },
-      { label: "Chairman Message", to: '#' },
-      { label: "Approvals & Affiliation", to: '#' },
-      { label: "Governing Council (GC)", to: '#' },
+      { label: "Chairman Message", to: '/chairman-message' },
+      { label: "Approvals & Affiliation", to: '/approval-affiliation' },
     ],
   },
   {
     label: "ADMINISTRATION",
     subLinks: [
-      { label: "Administration", to: "#" },
       { label: "Organization Structure", to: 'https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_3a8e12745ed54899b2579d7f55d09f40.pdf',newTab: true  },
       {
         label: "Faculty", subLinks: [
@@ -69,6 +67,7 @@ export const menuItems = [
     label: "ACADAMICS",
     subLinks: [
       { label: 'Academic Results', to: '/result' },
+      { label: 'University Rank Holders', to: '/topper' },
       {
         label: 'Time Table', subLinks: [
           { label: 'B.A.', to: 'https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_5a080978caa54c829472d5cf26f615fb.pdf',newTab: true},
@@ -133,12 +132,8 @@ export const menuItems = [
   },
   {
     label: "LIBRARY", subLinks: [
-    { label: 'About Library', to: '#' }
+      { label: 'About Library', to: '/library' }
     ]
   },
-  {
-    label: "AICTE", subLinks: [
-    {label: 'Approvals', to:'https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_a930729474894e0494df07d747402163.pdf',newTab: true }
-  ] },
   { label: "CONTACT", to: "/contact" },
 ];
