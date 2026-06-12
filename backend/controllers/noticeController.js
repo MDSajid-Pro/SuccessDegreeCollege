@@ -1,4 +1,4 @@
-import Notice from '../models/noticeModel.js'
+import Notice from '../models/noticeModel.js';
 
 // @desc    Get all notices
 // @route   GET /api/notices
@@ -15,19 +15,26 @@ export const getNotices = async (req, res) => {
 // @desc    Create a new notice
 // @route   POST /api/notices
 export const createNotice = async (req, res) => {
-  const { title, category, date, link, isNew } = req.body;
+  const { title, category, date, isNewBadge } = req.body;
 
+  // Validate incoming required body fields and file existence
   if (!title || !category || !date) {
     return res.status(400).json({ message: 'Please add all required fields' });
   }
+  if (!req.file) {
+    return res.status(400).json({ message: 'Please upload a PDF file' });
+  }
 
   try {
+    // req.file.path works out of the box for local storage configs or cloud buckets (like Cloudinary storage engines)
+    const pdfUrl = req.file.path; 
+
     const notice = await Notice.create({
       title,
       category,
       date,
-      link,
-      isNew
+      pdfUrl,
+      isNewBadge: isNewBadge === 'true' || isNewBadge === true // Handles form-data text conversions cleanly
     });
     res.status(201).json(notice);
   } catch (error) {
@@ -45,6 +52,8 @@ export const deleteNotice = async (req, res) => {
       return res.status(404).json({ message: 'Notice not found' });
     }
 
+    // Optional: Add logic here to remove the file from your local disk/cloud space if needed using notice.pdfUrl
+
     await notice.deleteOne();
     res.status(200).json({ id: req.params.id, message: 'Notice deleted' });
   } catch (error) {
@@ -52,19 +61,32 @@ export const deleteNotice = async (req, res) => {
   }
 };
 
+// @desc    Update a notice
+// @route   PUT /api/notices/:id
 export const updateNotice = async (req, res) => {
-  const notice = await Notice.findById(req.params.id);
-  if (notice) {
-    notice.title = req.body.title || notice.title;
-    notice.category = req.body.category || notice.category;
-    notice.date = req.body.date || notice.date;
-    notice.isNew = req.body.isNew || notice.isNew;
-    notice.link = req.body.link || notice.link;
+  try {
+    const notice = await Notice.findById(req.params.id);
 
-    const updatedNotice = await notice.save();
-    res.json(updatedNotice);
-  } else {
-    res.status(404);
-    throw new Error('Notice not found');
+    if (notice) {
+      notice.title = req.body.title || notice.title;
+      notice.category = req.body.category || notice.category;
+      notice.date = req.body.date || notice.date;
+      
+      if (req.body.isNewBadge !== undefined) {
+        notice.isNewBadge = req.body.isNewBadge === 'true' || req.body.isNewBadge === true;
+      }
+
+      // If a new document file was sent during modification, swap out the path asset tracker
+      if (req.file) {
+        notice.pdfUrl = req.file.path;
+      }
+
+      const updatedNotice = await notice.save();
+      res.json(updatedNotice);
+    } else {
+      res.status(404).json({ message: 'Notice not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

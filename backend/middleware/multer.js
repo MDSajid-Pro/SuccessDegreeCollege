@@ -27,6 +27,10 @@ const storage = new CloudinaryStorage({
     } else if (file.fieldname === 'transcript') {
       folderName = 'college_uploads/transcripts';
       resourceType = 'raw'; 
+    } else if (file.fieldname === 'pdfFile') {
+      // Added case to catch our notice board file uploads field
+      folderName = 'college_uploads/notices';
+      resourceType = 'raw'; 
     }
 
     // --- START OF FIX ---
@@ -34,7 +38,7 @@ const storage = new CloudinaryStorage({
     // Default: Remove extension (Best for Images, Cloudinary adds it back)
     let publicId = path.parse(file.originalname).name; 
 
-    // Special Case: If it is a PDF (raw), we MUST keep the extension
+    // Special Case: If it is a PDF or Raw doc, we MUST keep the extension
     if (resourceType === 'raw') {
         publicId = file.originalname; // e.g., "myfile.pdf"
     }
@@ -44,7 +48,7 @@ const storage = new CloudinaryStorage({
     return {
       folder: folderName,
       resource_type: resourceType,
-      public_id: publicId, // Use the variable we created above
+      public_id: publicId, 
       use_filename: true, 
       unique_filename: false, 
     };
@@ -53,14 +57,14 @@ const storage = new CloudinaryStorage({
 
 // 3. File Filter
 const fileFilter = (req, file, cb) => {
-  if (file.fieldname === "photo") {
+  if (file.fieldname === "photo" || file.fieldname === "image") {
     if (!file.mimetype.startsWith("image/")) {
       return cb(new Error("Photo must be an image file"), false);
     }
   }
-  if (file.fieldname === "transcript") {
+  if (file.fieldname === "transcript" || file.fieldname === "pdfFile") {
     if (file.mimetype !== "application/pdf") {
-      return cb(new Error("Transcript must be a PDF"), false);
+      return cb(new Error("Uploaded file must be a PDF document"), false);
     }
   }
   cb(null, true);
@@ -69,4 +73,4 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 export default upload;
-export { cloudinary }; // Export cloudinary so we can use it to delete files later
+export { cloudinary };

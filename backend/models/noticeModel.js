@@ -8,21 +8,24 @@ const noticeSchema = new mongoose.Schema({
   category: { 
     type: String, 
     required: true,
-    enum: ['Exams', 'Events', 'News', 'Admissions', 'General'] // Optional: restrict categories
+    enum: ['Exams', 'Events', 'News', 'Admissions', 'General']
   },
   date: { 
     type: String, 
     required: true 
   },
-  link: { 
+  pdfUrl: { 
     type: String, 
-    default: '#' 
+    required: true // Saved document path or Cloudinary asset link
   },
   isNewBadge: { 
     type: Boolean, 
     default: true 
   },
-}, { timestamps: true },{ versionKey: false }); // Automatically adds createdAt and updatedAt
+}, { 
+  timestamps: true, 
+  versionKey: false 
+});
 
 const Notice = mongoose.model('notice', noticeSchema);
 

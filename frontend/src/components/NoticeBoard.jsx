@@ -106,8 +106,8 @@ const NoticeBoard = () => {
 
   // --- CLICK HANDLER ---
   const handleNoticeClick = (notice) => {
-    if (notice.link) {
-      window.open(notice.link, "_blank", "noopener,noreferrer");
+    if (notice.pdfUrl) {
+      window.open(notice.pdfUrl, "_blank", "noopener,noreferrer");
     } else {
       setSelectedNotice(notice);
     }
@@ -236,7 +236,7 @@ const NoticeBoard = () => {
                   currentPage === 1
                     ? "text-gray-300 border-gray-200 cursor-not-allowed"
                     : "text-gray-600 border-gray-300 hover:bg-white hover:text-blue-600 shadow-sm"
-                }`}
+                }`} type="button"
               >
                 <ChevronLeft size={20} />
               </button>
@@ -252,7 +252,7 @@ const NoticeBoard = () => {
                   currentPage === totalPages
                     ? "text-gray-300 border-gray-200 cursor-not-allowed"
                     : "text-gray-600 border-gray-300 hover:bg-white hover:text-blue-600 shadow-sm"
-                }`}
+                }`} type="button"
               >
                 <ChevronRight size={20} />
               </button>

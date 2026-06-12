@@ -68,6 +68,7 @@ export const menuItems = [
     subLinks: [
       { label: 'Academic Results', to: '/result' },
       { label: 'University Rank Holders', to: '/topper' },
+      { label: 'Syllabus', to: '/syllabus' },
       {
         label: 'Time Table', subLinks: [
           { label: 'B.A.', to: 'https://6212f8e5-1d36-4b90-b89c-3951a43c5d4f.filesusr.com/ugd/e1ca7d_5a080978caa54c829472d5cf26f615fb.pdf',newTab: true},

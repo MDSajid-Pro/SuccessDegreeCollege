@@ -1,5 +1,5 @@
-import express from 'express'
-const router = express.Router();
+import express from 'express';
+import upload from '../middleware/multer.js'; // Imported your shared Cloudinary config middleware
 import { 
   getNotices, 
   createNotice, 
@@ -7,9 +7,15 @@ import {
   updateNotice
 } from '../controllers/noticeController.js';
 
+const router = express.Router();
+
+// Routes Configuration
 router.get('/', getNotices);
-router.post('/', createNotice);
+
+// Handles file stream intercept parsing directly to Cloudinary using the 'pdfFile' field key
+router.post('/', upload.single('pdfFile'), createNotice);
+router.put('/:id', upload.single('pdfFile'), updateNotice);
+
 router.delete('/:id', deleteNotice);
-router.put('/:id',updateNotice)
 
 export default router;

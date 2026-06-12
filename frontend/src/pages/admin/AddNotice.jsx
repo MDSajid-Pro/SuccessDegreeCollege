@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useAppContext } from "../../context/AppContext";
 import { 
   Calendar, 
-  Link as LinkIcon, 
+  FileText, // Changed from LinkIcon
   Type, 
   Tag, 
   Plus, 
@@ -14,8 +14,8 @@ import {
   Megaphone,
   CheckCircle2,
   AlertCircle,
-  ChevronLeft,  // Added
-  ChevronRight  // Added
+  ChevronLeft,  
+  ChevronRight  
 } from "lucide-react";
 
 export default function ManageNotices() {
@@ -27,9 +27,9 @@ export default function ManageNotices() {
     title: "",
     category: "Exams",
     date: "",
-    link: "",
     isNewBadge: true,
   });
+  const [pdfFile, setPdfFile] = useState(null); // Added for PDF file tracking
   const [editId, setEditId] = useState(null);
 
   // 2. Pagination State
@@ -73,19 +73,42 @@ export default function ManageNotices() {
     });
   };
 
+  const handleFileChange = (e) => {
+    setPdfFile(e.target.files[0]);
+  };
+
   const handleCancelEdit = () => {
     setEditId(null);
-    setFormData({ title: "", category: "Exams", date: "", link: "", isNewBadge: true });
+    setFormData({ title: "", category: "Exams", date: "", isNewBadge: true });
+    setPdfFile(null);
+    // Reset file input element visually
+    const fileInput = document.getElementById("pdfFile");
+    if (fileInput) fileInput.value = "";
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Use FormData for multipart file upload tracking
+    const data = new FormData();
+    data.append("title", formData.title);
+    data.append("category", formData.category);
+    data.append("date", formData.date);
+    data.append("isNewBadge", formData.isNewBadge);
+    if (pdfFile) {
+      data.append("pdfFile", pdfFile);
+    }
+
     try {
       if (editId) {
-        await axios.put(`/api/notices/${editId}`, formData);
+        await axios.put(`/api/notices/${editId}`, data, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         toast.success("Notice updated successfully");
       } else {
-        await axios.post('/api/notices', formData);
+        await axios.post('/api/notices', data, {
+          headers: { "Content-Type": "multipart/form-data" }
+        });
         toast.success("Notice added successfully");
       }
       handleCancelEdit();
@@ -97,7 +120,13 @@ export default function ManageNotices() {
 
   const handleEdit = (notice) => {
     setEditId(notice._id);
-    setFormData(notice);
+    setFormData({
+      title: notice.title,
+      category: notice.category,
+      date: notice.date,
+      isNewBadge: notice.isNewBadge
+    });
+    setPdfFile(null); // Clear previous file state selection on fresh edit
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -216,18 +245,19 @@ export default function ManageNotices() {
                             </div>
                         </div>
 
-                        {/* Link Input */}
+                        {/* PDF File Input (Replaced Link Input) */}
                         <div className="space-y-1">
-                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Link (Optional)</label>
+                            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Upload PDF {editId && "(Optional)"}</label>
                             <div className="relative">
-                                <LinkIcon className="absolute left-3 top-3 text-gray-400" size={18} />
+                                <FileText className="absolute left-3 top-3 text-gray-400" size={18} />
                                 <input
-                                    type="text"
-                                    name="link"
-                                    placeholder="https://..."
-                                    value={formData.link}
-                                    onChange={handleChange}
-                                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all"
+                                    type="file"
+                                    id="pdfFile"
+                                    name="pdfFile"
+                                    accept=".pdf"
+                                    onChange={handleFileChange}
+                                    required={!editId}
+                                    className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:bg-white outline-none transition-all text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
                                 />
                             </div>
                         </div>
@@ -287,9 +317,9 @@ export default function ManageNotices() {
                                         <tr key={notice._id} className="hover:bg-indigo-50/30 transition-colors group">
                                             <td className="p-4 pl-6">
                                                 <p className="font-semibold text-gray-800">{notice.title}</p>
-                                                {notice.link && (
-                                                    <a href={notice.link} target="_blank" rel="noreferrer" className="text-xs text-indigo-500 hover:underline flex items-center gap-1 mt-1">
-                                                        <LinkIcon size={10} /> View Link
+                                                {notice.pdfUrl && (
+                                                    <a href={notice.pdfUrl} target="_blank" rel="noreferrer" className="text-xs text-indigo-500 hover:underline flex items-center gap-1 mt-1">
+                                                        <FileText size={10} /> View PDF Document
                                                     </a>
                                                 )}
                                             </td>
@@ -358,6 +388,7 @@ export default function ManageNotices() {
                                         ${currentPage === 1 
                                             ? "bg-gray-100 text-gray-400 cursor-not-allowed border-transparent" 
                                             : "bg-white text-gray-700 border-gray-200 hover:bg-white hover:text-indigo-600 hover:border-indigo-200 shadow-sm"}`}
+                                Type="button"
                                 >
                                     <ChevronLeft size={16} /> Previous
                                 </button>
@@ -369,6 +400,7 @@ export default function ManageNotices() {
                                         ${currentPage === totalPages 
                                             ? "bg-gray-100 text-gray-400 cursor-not-allowed border-transparent" 
                                             : "bg-white text-gray-700 border-gray-200 hover:bg-white hover:text-indigo-600 hover:border-indigo-200 shadow-sm"}`}
+                                Type="button"
                                 >
                                     Next <ChevronRight size={16} />
                                 </button>

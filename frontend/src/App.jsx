@@ -32,6 +32,7 @@ import Library from "./pages/Library"
 import UniversityRankHolders from "./pages/UniversityRankHolders"
 import ApprovalsAffiliation from "./pages/ApprovalsAffiliation"
 import ChairmanMessage from "./pages/ChairmanMessage"
+import TimeTable from "./pages/TimeTable"
 
 const App = () => {
 
@@ -62,7 +63,8 @@ const App = () => {
         <Route path="/library" element={<Library />} />
         <Route path="/topper" element={<UniversityRankHolders />} />
         <Route path="/approval-affiliation" element={<ApprovalsAffiliation />} />
-        <Route path="/chairman-message" element={<ChairmanMessage/>} />
+        <Route path="/chairman-message" element={<ChairmanMessage />} />
+        <Route path="/syllabus" element={<TimeTable/>} />
         <Route path="/admin" element={token ? <Layout/> :<Login />}>
           <Route index element={<Dashboard />} />
           <Route path="subscribers" element={<Subscribers />} />
