@@ -6,56 +6,48 @@ import path from 'path';
 
 dotenv.config();
 
-// 1. Configure Cloudinary
+// Ensure Cloudinary is configured
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// 2. Configure Storage
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: async (req, file) => {
-    let folderName = 'uploads'; 
-    let resourceType = 'auto';  
+  let folderName = 'uploads'; 
+  let resourceType = 'auto';  
 
-    // Set folder based on field name
-    if (file.fieldname === 'photo' || file.fieldname === 'image') {
-      folderName = 'college_uploads/images';
-      resourceType = 'image';
-    } else if (file.fieldname === 'transcript') {
-      folderName = 'college_uploads/transcripts';
-      resourceType = 'raw'; 
-    } else if (file.fieldname === 'pdfFile') {
-      // Added case to catch our notice board file uploads field
-      folderName = 'college_uploads/notices';
-      resourceType = 'raw'; 
-    }
+  if (file.mimetype && file.mimetype.startsWith('image/')) {
+    folderName = 'college_uploads/images';
+    resourceType = 'image';
+  } else if (file.mimetype === 'application/pdf') {
+    folderName = file.fieldname === 'transcript' 
+      ? 'college_uploads/transcripts' 
+      : 'college_uploads/notices';
+    resourceType = 'raw'; 
+  }
 
-    // --- START OF FIX ---
-    
-    // Default: Remove extension (Best for Images, Cloudinary adds it back)
-    let publicId = path.parse(file.originalname).name; 
+  // Extract base name without path structure
+  const baseName = file.originalname ? path.parse(file.originalname).name : `file_${Date.now()}`;
+  
+  // Clean special characters: Replace spaces, commas, ampersands, etc., with underscores
+  const sanitizedName = baseName.replace(/[^a-zA-Z0-9-_]/g, '_');
 
-    // Special Case: If it is a PDF or Raw doc, we MUST keep the extension
-    if (resourceType === 'raw') {
-        publicId = file.originalname; // e.g., "myfile.pdf"
-    }
+  // For raw assets (PDFs), we append the extension safely at the end
+  const cleanPublicId = resourceType === 'raw' && file.originalname
+    ? `${sanitizedName}${path.parse(file.originalname).ext}`
+    : `${sanitizedName}_${Date.now()}`;
 
-    // --- END OF FIX ---
-
-    return {
-      folder: folderName,
-      resource_type: resourceType,
-      public_id: publicId, 
-      use_filename: true, 
-      unique_filename: false, 
-    };
-  },
+  return {
+    folder: folderName,
+    resource_type: resourceType,
+    public_id: cleanPublicId,
+  };
+},
 });
 
-// 3. File Filter
 const fileFilter = (req, file, cb) => {
   if (file.fieldname === "photo" || file.fieldname === "image") {
     if (!file.mimetype.startsWith("image/")) {

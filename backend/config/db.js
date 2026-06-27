@@ -14,7 +14,7 @@ const connectDB = async () => {
     });
 
     mongoose.connection.on('connected', () => {
-        console.log("Database Connected successfully to:", mongoose.connection.name);
+        console.log("Database Connected successfully");
     });
 
     try {

@@ -133,7 +133,8 @@ export const menuItems = [
   },
   {
     label: "LIBRARY", subLinks: [
-      { label: 'About Library', to: '/library' }
+      { label: 'About Library', to: '/library' },
+      { label: 'e-Library', to: 'https://librarymanagmentsystemsdc.vercel.app',newTab: true }
     ]
   },
   { label: "CONTACT", to: "/contact" },

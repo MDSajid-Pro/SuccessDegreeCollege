@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { useAppContext } from "../../context/AppContext";
 import { 
   Calendar, 
-  FileText, // Changed from LinkIcon
+  FileText, 
   Type, 
   Tag, 
   Plus, 
@@ -19,7 +19,6 @@ import {
 } from "lucide-react";
 
 export default function ManageNotices() {
-  // 1. Use AppContext for axios
   const { axios } = useAppContext();
 
   const [notices, setNotices] = useState([]);
@@ -29,17 +28,15 @@ export default function ManageNotices() {
     date: "",
     isNewBadge: true,
   });
-  const [pdfFile, setPdfFile] = useState(null); // Added for PDF file tracking
+  const [pdfFile, setPdfFile] = useState(null); 
   const [editId, setEditId] = useState(null);
 
-  // 2. Pagination State
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 7;
 
-  // Fetch using Context Axios
   const fetchNotices = async () => {
     try {
-      const res = await axios.get('/api/notices'); // Uses baseURL from context
+      const res = await axios.get('/api/notices'); 
       setNotices(res.data);
     } catch (error) {
       toast.error("Failed to load notices");
@@ -50,7 +47,6 @@ export default function ManageNotices() {
     fetchNotices();
   }, []);
 
-  // --- Pagination Logic ---
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentNotices = notices.slice(indexOfFirstItem, indexOfLastItem);
@@ -64,7 +60,6 @@ export default function ManageNotices() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   };
 
-  // --- Form Handlers ---
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -81,7 +76,6 @@ export default function ManageNotices() {
     setEditId(null);
     setFormData({ title: "", category: "Exams", date: "", isNewBadge: true });
     setPdfFile(null);
-    // Reset file input element visually
     const fileInput = document.getElementById("pdfFile");
     if (fileInput) fileInput.value = "";
   };
@@ -89,14 +83,13 @@ export default function ManageNotices() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Use FormData for multipart file upload tracking
     const data = new FormData();
     data.append("title", formData.title);
     data.append("category", formData.category);
     data.append("date", formData.date);
     data.append("isNewBadge", formData.isNewBadge);
     if (pdfFile) {
-      data.append("pdfFile", pdfFile);
+      data.append("pdfFile", pdfFile); // Matches the updated middleware filter key!
     }
 
     try {
@@ -114,7 +107,9 @@ export default function ManageNotices() {
       handleCancelEdit();
       fetchNotices();
     } catch (error) {
-      toast.error("Something went wrong");
+      // FIX: Dynamically read exact text error messages from Vercel's response stream
+      const serverErrorMessage = error.response?.data?.message || "Something went wrong";
+      toast.error(serverErrorMessage);
     }
   };
 
@@ -126,7 +121,7 @@ export default function ManageNotices() {
       date: notice.date,
       isNewBadge: notice.isNewBadge
     });
-    setPdfFile(null); // Clear previous file state selection on fresh edit
+    setPdfFile(null); 
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -136,7 +131,6 @@ export default function ManageNotices() {
       await axios.delete(`/api/notices/${id}`);
       toast.success("Notice deleted");
       
-      // Adjust page if deleting last item on page
       if (currentNotices.length === 1 && currentPage > 1) {
         setCurrentPage(currentPage - 1);
       }
@@ -245,7 +239,7 @@ export default function ManageNotices() {
                             </div>
                         </div>
 
-                        {/* PDF File Input (Replaced Link Input) */}
+                        {/* PDF File Input */}
                         <div className="space-y-1">
                             <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider ml-1">Upload PDF {editId && "(Optional)"}</label>
                             <div className="relative">
@@ -388,7 +382,7 @@ export default function ManageNotices() {
                                         ${currentPage === 1 
                                             ? "bg-gray-100 text-gray-400 cursor-not-allowed border-transparent" 
                                             : "bg-white text-gray-700 border-gray-200 hover:bg-white hover:text-indigo-600 hover:border-indigo-200 shadow-sm"}`}
-                                Type="button"
+                                    type="button"
                                 >
                                     <ChevronLeft size={16} /> Previous
                                 </button>
@@ -400,7 +394,7 @@ export default function ManageNotices() {
                                         ${currentPage === totalPages 
                                             ? "bg-gray-100 text-gray-400 cursor-not-allowed border-transparent" 
                                             : "bg-white text-gray-700 border-gray-200 hover:bg-white hover:text-indigo-600 hover:border-indigo-200 shadow-sm"}`}
-                                Type="button"
+                                    type="button"
                                 >
                                     Next <ChevronRight size={16} />
                                 </button>

@@ -1,3 +1,4 @@
+import { cloudinary } from '../middleware/multer.js'; // <-- THE MISSING LINK
 import Notice from '../models/noticeModel.js';
 
 // @desc    Get all notices
@@ -26,7 +27,6 @@ export const createNotice = async (req, res) => {
   }
 
   try {
-    // req.file.path works out of the box for local storage configs or cloud buckets (like Cloudinary storage engines)
     const pdfUrl = req.file.path; 
 
     const notice = await Notice.create({
@@ -34,11 +34,26 @@ export const createNotice = async (req, res) => {
       category,
       date,
       pdfUrl,
-      isNewBadge: isNewBadge === 'true' || isNewBadge === true // Handles form-data text conversions cleanly
+      isNewBadge: isNewBadge === 'true' || isNewBadge === true 
     });
+    
     res.status(201).json(notice);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    console.log("--- ACTUAL DETAILED BACKEND ERROR START ---");
+    // Standard error logging works cleanly once reference crashes are eliminated
+    console.error(error); 
+    console.log("--- ACTUAL DETAILED BACKEND ERROR END ---");
+
+    // Clean up orphaned file on Cloudinary
+    if (req.file && req.file.filename) {
+      try {
+        await cloudinary.uploader.destroy(req.file.filename, { resource_type: 'raw' });
+      } catch (cloudinaryErr) {
+        console.error("Cloudinary cleanup failed:", cloudinaryErr.message);
+      }
+    }
+    
+    res.status(500).json({ success: false, message: error.message || "Internal Server Error" });
   }
 };
 
