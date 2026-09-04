@@ -21,7 +21,7 @@ const ResultsPage = () => {
   const [loading, setLoading] = useState(true);
   
   // Filters
-  const [selectedYear, setSelectedYear] = useState("2024-25");
+  const [selectedYear, setSelectedYear] = useState("2025-26");
   const [selectedCourse, setSelectedCourse] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -172,9 +172,9 @@ const ResultsPage = () => {
                 onChange={(e) => setSelectedYear(e.target.value)}
                 className="p-2.5 bg-gray-50 border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-blue-500"
             >
-                <option value="2023-24">Batch 2023-24</option>
-                <option value="2024-25">Batch 2024-25</option>
                 <option value="2025-26">Batch 2025-26</option>
+                <option value="2024-25">Batch 2024-25</option>
+                <option value="2023-24">Batch 2023-24</option>
             </select>
             <select 
                 value={selectedCourse}

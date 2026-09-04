@@ -138,7 +138,7 @@ const Banner = ({
             
             <div className="my-2 transform group-hover:scale-105 transition-transform">
               <a 
-                href="https://uucms.karnataka.gov.in/Login/OnlineStudentRegistrationForm" 
+                href="https://uucms.karnataka.gov.in/Login/CandidateRegistration" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-black px-6 py-1.5 text-xs sm:text-sm rounded-xl shadow-md tracking-widest block transition-all animate-pulse"

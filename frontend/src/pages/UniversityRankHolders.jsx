@@ -4,6 +4,17 @@ import { motion } from "framer-motion";
 const UniversityRankHolders = () => {
   // Premium dataset for Gulbarga University (GUG) Rank Holders
   const rankHolders = [
+  {
+      name: "Baby Ayesha",
+      fatherName: "D/o Faiyazuddin",
+      regNo: "U27WK23S0024",
+      stream: "B.Sc (PCM)",
+      rank: "1st Rank",
+      percentage: "92.8%",
+      year: "2025 - 2026",
+      achievement: "Gold Medalist & University Topper",
+      university:"Bidar University"
+    },
     {
       name: "Shabeena Kashaf",
       fatherName: "D/o Shafiuddin",
@@ -12,7 +23,8 @@ const UniversityRankHolders = () => {
       rank: "1st Rank",
       percentage: "92.8%",
       year: "2024 - 2025",
-      achievement: "Gold Medalist & University Topper"
+      achievement: "Gold Medalist & University Topper",
+      university:"Gulbarga University"
     },
     {
       name: "Aliya Anjum",
@@ -22,7 +34,8 @@ const UniversityRankHolders = () => {
       rank: "1st Rank",
       percentage: "88.0%",
       year: "2023 - 2024",
-      achievement: "Gold Medalist & University Topper"
+      achievement: "Gold Medalist & University Topper",
+      university:"Gulbarga University"
     },
   ];
 
@@ -120,7 +133,7 @@ const UniversityRankHolders = () => {
                   <p className="text-sm font-bold text-slate-600">
                     {holder.fatherName}
                   </p>
-                  <p className="text-xs font-mono text-slate-400 tracking-wide">
+                  <p className="text-xs font-mono text-slate-600 tracking-wide">
                     Reg No: {holder.regNo}
                   </p>
                 </div>
@@ -129,7 +142,7 @@ const UniversityRankHolders = () => {
 
                 {/* Stream / Department Details */}
                 <div className="space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">Academic Program</span>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest block">Academic Program</span>
                   <p className="text-sm font-extrabold text-slate-800 tracking-wide">{holder.stream}</p>
                 </div>
               </div>
@@ -138,7 +151,7 @@ const UniversityRankHolders = () => {
               <div className="mt-6 pt-4 border-t border-dashed border-slate-200 flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <span className="text-[9px] font-black text-red-600 uppercase tracking-widest block">{holder.achievement}</span>
-                  <span className="text-[11px] font-bold text-slate-400 block mt-0.5 truncate">Gulbarga University Convocation</span>
+                  <span className="text-[11px] font-bold text-slate-600 block mt-0.5 truncate">{holder.university} Convocation</span>
                 </div>
                 
                 {/* Aggregate Percentage Token Badge */}
