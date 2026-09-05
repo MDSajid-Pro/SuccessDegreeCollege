@@ -28,7 +28,7 @@ const SYLLABUS_DATA = {
     "5th & 6th Semester": [
       { subject: "Botany", credits: "Core Scheme Credits: 4 (SEP)", fileUrl: "https://bidaruniversity.karnataka.gov.in/uploads/media_to_upload1788334273.pdf" },
       { subject: "Zoology", credits: "Core Scheme Credits: 4 (SEP)", fileUrl: "/uplods/B.Sc. V and VI Sem SEP Syllabus.pdf" },
-      { subject: "Chemistry", credits: "Core Scheme Credits: 4 (SEP)", fileUrl: "#" },
+      { subject: "Chemistry", credits: "Core Scheme Credits: 4 (SEP)", fileUrl: "/uplods/B.Sc. V and VI Sem SEP Chemistry Syllabus.pdf" },
       { subject: "Computer Science", credits: "Core Scheme Credits: 4 (SEP)", fileUrl: "/uplods/B.Sc. V and VI Sem SEP Syllabus2.pdf" }
     ]
   },
